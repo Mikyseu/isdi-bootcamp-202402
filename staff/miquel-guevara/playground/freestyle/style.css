@@ -1,0 +1,67 @@
+.skull {
+  top: 12px;
+  left: 12px;
+  position: relative;
+}
+.skull__up {
+  background-color: #696969;
+  width: 45px;
+  height: 35px;
+  position: absolute;
+  border-radius: 50%;
+  top: 26px;
+  left: 30px;
+}
+.skull__eye--left {
+  background-color: white;
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  border-radius: 50%;
+  top: 7px;
+  left: 7px;
+}
+.skull__eye--right {
+  background-color: white;
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  border-radius: 50%;
+  top: 7px;
+  left: 26px;
+}
+.skull__down {
+  background-color: #696969;
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  border-radius: 2px;
+  top: 47px;
+  left: 38px;
+}
+.skull__tooth-1 {
+  background-color: #000000;
+  width: 3px;
+  height: 14px;
+  position: absolute;
+  top: 11px;
+  left: 7px;
+}
+.skull__tooth-2 {
+  background-color: #000000;
+  width: 3px;
+  height: 14px;
+  position: absolute;
+  top: 11px;
+  left: 14px;
+}
+.skull__tooth-3 {
+  background-color: #000000;
+  width: 3px;
+  height: 14px;
+  position: absolute;
+  top: 11px;
+  left: 21px;
+}
+
+/*# sourceMappingURL=style.css.map */
