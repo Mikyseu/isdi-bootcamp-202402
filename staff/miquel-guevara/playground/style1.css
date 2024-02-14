@@ -1,0 +1,128 @@
+.top {
+  width: 50px;
+  height: 0px;
+  border-right: 20px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 30px solid #27ae60;
+  position: relative;
+  left: 40px;
+}
+
+.window--back {
+  width: 20px;
+  height: 0px;
+  border-right: 0px solid transparent;
+  border-left: 8px solid transparent;
+  border-bottom: 25px solid #4472e7;
+  position: absolute;
+  top: 2.5px;
+  left: -6px;
+}
+
+.window--front {
+  width: 23px;
+  height: 0px;
+  border-right: 16px solid transparent;
+  border-left: 0px solid transparent;
+  border-bottom: 25px solid #4472e7;
+  position: absolute;
+  top: 2.5px;
+  left: 25px;
+}
+
+.window--child {
+  width: 6px;
+  height: 0px;
+  border-right: 14px solid transparent;
+  border-left: 0px solid transparent;
+  border-bottom: 22px solid #51a8ef;
+  position: absolute;
+  top: 1.5px;
+  left: 16px;
+}
+
+.chassis {
+  background-color: #27ae60;
+  width: 120px;
+  height: 30px;
+  position: absolute;
+  left: 26px;
+}
+
+.chassis--front {
+  width: 12px;
+  height: 0px;
+  border-right: 14px solid transparent;
+  border-left: 0px solid transparent;
+  border-bottom: 30px solid #27ae60;
+  position: absolute;
+  top: 38px;
+  left: 140px;
+}
+
+.light {
+  width: 6px;
+  height: 0px;
+  border-right: 7px solid transparent;
+  border-left: 0px solid transparent;
+  border-bottom: 15px solid yellow;
+  position: absolute;
+  top: 38px;
+  left: 146px;
+}
+
+.door--back {
+  background-color: #0b6f35;
+  width: 32px;
+  height: 30px;
+  position: absolute;
+  left: 22px;
+}
+
+.door--front {
+  background-color: #0b6f35;
+  width: 44.5px;
+  height: 30px;
+  position: absolute;
+  left: 57.5px;
+}
+
+.knob {
+  background-color: black;
+  width: 10px;
+  height: 3px;
+  border-radius: 2px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.wheel--back {
+  background-color: black;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50px;
+  left: 35px;
+}
+
+.wheel--front {
+  background-color: black;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50px;
+  left: 110px;
+}
+
+.cover {
+  background-color: #e1e0df;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  top: 7.5px;
+  left: 7.5px;
+}

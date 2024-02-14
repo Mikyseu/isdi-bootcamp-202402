@@ -1,0 +1,104 @@
+@use '../utils'
+
+.car
+    @include utils.position(12px , 12px)
+    position: relative
+
+    &__top
+        width: 100px
+        height: 0px
+        border-right: 25px solid transparent
+        border-left: 25px solid transparent
+        border-bottom: 35px solid #007e39
+        position: absolute
+        @include utils.position(12px , 50px)
+
+    &__window--back
+        width: 45px
+        height: 0px
+        border-right: 0px solid transparent
+        border-left: 22px solid transparent
+        border-bottom: 30px solid #0785c0
+        position: absolute
+        @include utils.position(2px , -20px)
+
+    &__window--front
+        width: 45px
+        height: 0px
+        border-right: 22px solid transparent
+        border-left: 0px solid transparent
+        border-bottom: 30px solid #0785c0
+        position: absolute
+        @include utils.position(2px , 52px)
+
+    &__window--child
+        width: 10px
+        height: 0px
+        border-right: 21px solid transparent
+        border-left: 0px solid transparent
+        border-bottom: 30px solid #5cc2f1
+        position: absolute
+        @include utils.position(0px , 36px)
+
+    &__chassis
+        background-color: #007e39
+        @include utils.size(190px , 35px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(45px , 40px)
+
+    &__door--back
+        background-color: #05ad51
+        @include utils.size(66px , 35px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(0px , 16px)
+
+    &__door--front
+        background-color: #05ad51
+        @include utils.size(66px , 35px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(0px , 87px)
+
+    &__knob--back
+        background-color: black
+        @include utils.size(6px , 3px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(5px , 5px)
+
+    &__knob--front
+        background-color: black
+        @include utils.size(6px , 3px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(5px , 5px)
+
+    &__light
+        background-color: yellow
+        @include utils.size(10px , 10px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(45px , 220px)
+
+    &__wheel--back
+        background-color: black
+        @include utils.size(35px , 35px)
+        position: absolute
+        border-radius: 50%
+        @include utils.position(65px , 47px)
+
+    &__wheel--front
+        background-color: black
+        @include utils.size(35px , 35px)
+        position: absolute
+        border-radius: 50%
+        @include utils.position(65px , 180px)
+
+    &__wheel-cover
+        background-color: grey
+        @include utils.size(20px , 20px)
+        position: absolute
+        border-radius: 50%
+        @include utils.position(7.5px , 7.5px)
