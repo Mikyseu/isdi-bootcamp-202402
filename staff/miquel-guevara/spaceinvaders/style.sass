@@ -1,0 +1,37 @@
+$ship-height: 3vw
+$alien-height: 3vw
+$recreativa-height: 46vw
+$ship-size-ratio: 1
+
+body
+    margin: 0
+
+#space
+    background-color: black
+
+#ship
+    height: $ship-height
+    position: absolute
+    top: calc( 100vw - $ship-height)
+
+#recreativa
+
+    background-position: center
+    background-repeat: no-repeat
+    height: $recreativa-height
+    z-index: 99
+
+.ufo
+    display: flex
+    flex-direction: column
+    position: absolute
+    top: 30vw
+    left: 35.5vw
+
+.aliens
+    display: flex
+    justify-content: center
+    z-index: 0
+
+.alien
+    height: $alien-height

@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+}
+
+#space {
+  background-color: black;
+}
+
+#ship {
+  height: 3vw;
+  position: absolute;
+  top: 97vw;
+}
+
+#recreativa {
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 46vw;
+  z-index: 99;
+}
+
+.ufo {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 30vw;
+  left: 35.5vw;
+}
+
+.aliens {
+  display: flex;
+  justify-content: center;
+  z-index: 0;
+}
+
+.alien {
+  height: 3vw;
+}
+
+/*# sourceMappingURL=style.css.map */
