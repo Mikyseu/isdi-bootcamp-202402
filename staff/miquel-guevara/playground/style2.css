@@ -1,0 +1,240 @@
+.horse__head {
+  background-color: #eb984e;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  border-radius: 1px;
+  top: 30px;
+  left: 30px;
+}
+
+.hair__horse {
+  background-color: black;
+  width: 15px;
+  height: 10px;
+  border-radius: 3px;
+  position: absolute;
+  top: 30px;
+  left: 55px;
+}
+
+.horse__jaw--left {
+  background-color: #eb984e;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+  left: 30px;
+}
+
+.horse__jaw--right {
+  background-color: #eb984e;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+  left: 66px;
+}
+
+.horse__noise {
+  background-color: #eb984e;
+  width: 30px;
+  height: 50px;
+  position: absolute;
+  border-radius: 1px;
+  top: 15px;
+  left: 10px;
+}
+
+.white__stain {
+  background-color: white;
+  width: 6px;
+  height: 19px;
+  border-radius: 3px;
+  position: absolute;
+  top: 10px;
+  left: 12px;
+}
+
+.hole__noise {
+  background-color: #773903;
+  width: 30px;
+  height: 10px;
+  position: absolute;
+  border-radius: 1px;
+  top: 40px;
+  left: 0px;
+}
+
+.hole__noise--left {
+  background-color: black;
+  width: 5px;
+  height: 7px;
+  border-radius: 2px;
+  position: absolute;
+  top: 1.5px;
+  left: 22px;
+}
+
+.hole__noise--right {
+  background-color: black;
+  width: 5px;
+  height: 7px;
+  border-radius: 2px;
+  position: absolute;
+  top: 1.5px;
+  left: 3px;
+}
+
+.shadow__noise--left {
+  background-color: rgb(121, 119, 119);
+  width: 2px;
+  height: 5px;
+  position: absolute;
+  top: 0, 5px;
+  left: 0px;
+}
+
+.shadow__noise--right {
+  background-color: rgb(121, 119, 119);
+  width: 2px;
+  height: 5px;
+  position: absolute;
+  top: 0.5px;
+  left: 2.75px;
+}
+
+.horse__mouth {
+  background-color: black;
+  width: 15px;
+  height: 7px;
+  border-radius: 2%;
+  position: absolute;
+  top: 64px;
+  left: 18px;
+}
+
+.horse__tongue {
+  background-color: red;
+  width: 8px;
+  height: 3px;
+  border-radius: 2px;
+  position: absolute;
+  top: 4px;
+  left: 3.5px;
+}
+
+.teeth__horse {
+  background-color: white;
+  width: 12px;
+  height: 1px;
+  position: absolute;
+  top: 1.5px;
+  left: 1.75px;
+}
+
+.horse__eye--left {
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 1px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.horse__eye--right {
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 1px;
+  position: absolute;
+  top: 5px;
+  left: 29px;
+}
+
+.pupil--left {
+  background-color: black;
+  width: 5px;
+  height: 5px;
+  border-radius: 2%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.pupil--right {
+  background-color: black;
+  width: 5px;
+  height: 5px;
+  border-radius: 2%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.pupil--inside--left {
+  background-color: white;
+  width: 2px;
+  height: 2px;
+  border-radius: 2%;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+.pupil--inside--right {
+  background-color: white;
+  width: 2px;
+  height: 2px;
+  border-radius: 2%;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.horse__ear--left {
+  background-color: #eb984e;
+  width: 10px;
+  height: 15px;
+  position: absolute;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  top: 28px;
+  left: 30px;
+}
+
+.horse__ear__inside--left {
+  background-color: #f7bf8f;
+  width: 5px;
+  height: 10px;
+  position: absolute;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  top: 2px;
+  left: 2.5px;
+  transform: rotate(-10deg);
+}
+.horse__ear--right {
+  background-color: #eb984e;
+  width: 10px;
+  height: 15px;
+  position: absolute;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  top: 28px;
+  left: 85px;
+}
+
+.horse__ear__inside--right {
+  background-color: #f7bf8f;
+  width: 5px;
+  height: 10px;
+  position: absolute;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  top: 2px;
+  left: 2.5px;
+  transform: rotate(10deg);
+}

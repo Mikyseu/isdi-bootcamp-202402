@@ -1,0 +1,133 @@
+@use '../utils'
+
+.horse
+    @include utils.position(12px , 12px)
+    position: relative
+
+    &__hair
+        background-color: black
+        @include utils.size(15px , 10px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(1px , 17.5px)
+
+    &__head
+        background-color: #9b6d00
+        @include utils.size(50px , 50px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(9px , 0px)
+
+    &__mouth
+        background-color: black
+        @include utils.size(25px , 10px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(37px , 0px)
+
+    &__tongue
+        background-color: red
+        @include utils.size(8px ,3px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(7px , 9px)
+
+    &__teeth
+        background-color: white
+        @include utils.size(4px ,5px)
+        position: absolute
+        border-radius: 1px
+        @include utils.position(0px , 2px)
+
+    &__noise
+        background-color: #9b6d00
+        @include utils.size(25px , 40px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(28px , 12px)
+
+    &__noise-hole--left
+        background-color: #5f4301
+        @include utils.size(5px , 8px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(26px , 3px)
+
+    &__noise-hole--right
+        background-color: #5f4301
+        @include utils.size(5px , 8px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(0px , 14px)
+
+    &__noise-shadow--left
+        background-color: #c78c03
+        @include utils.size(2px , 5px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(1px , 3px)
+
+    &__noise-shadow--right
+        background-color: #c78c03
+        @include utils.size(2px , 5px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(1px , 0.5px)
+
+    &__eye--left
+        background-color: white
+        @include utils.size(12px , 12px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(17px , 5px)
+
+    &__pupil--left
+        background-color: black
+        @include utils.size(3px , 3px)
+        position: absolute
+        border-radius: 1px
+        @include utils.position(05px , 5px)
+
+    &__eye--right
+        background-color: white
+        @include utils.size(12px , 12px)
+        position: absolute
+        border-radius: 2px
+        @include utils.position(17px , 33px)
+
+    &__pupil--right
+        background-color: black
+        @include utils.size(3px , 3px)
+        position: absolute
+        border-radius: 1px
+        @include utils.position(05px , 5px)
+
+    &__jaw--left
+        background-color: #9b6d00
+        @include utils.size(20px , 20px)
+        border-radius: 50px
+        position: absolute
+        @include utils.position(45.5px , 0px)
+
+    &__jaw--right
+        background-color: #9b6d00
+        @include utils.size(20px , 20px)
+        border-radius: 50px
+        position: absolute
+        @include utils.position(45.5px , 30.15px)
+
+    &__ear--left
+        background-color: #9b6d00
+        @include utils.size(20px , 20px)
+        border-bottom-left-radius: 5px
+        border-top-right-radius: 5px
+        position: absolute
+        @include utils.position(0px , -10px)
+
+    &__ear--right
+        background-color: #9b6d00
+        @include utils.size(20px , 20px)
+        border-top-left-radius: 5px
+        border-bottom-right-radius: 5px
+        position: absolute
+        @include utils.position(0px , 39px)
