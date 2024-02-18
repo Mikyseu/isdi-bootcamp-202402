@@ -4,37 +4,31 @@ body {
 
 #space {
   background-color: black;
+  width: 100vw;
+  height: 100vh;
 }
 
 #ship {
-  height: 3vw;
+  height: 4vw;
   position: absolute;
-  top: 97vw;
-}
-
-#recreativa {
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 46vw;
-  z-index: 99;
+  top: 96vw;
 }
 
 .ufo {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 30vw;
-  left: 35.5vw;
+  top: 0vw;
+  left: 25vw;
 }
 
 .aliens {
   display: flex;
   justify-content: center;
-  z-index: 0;
 }
 
 .alien {
-  height: 3vw;
+  height: 5vw;
 }
 
 /*# sourceMappingURL=style.css.map */
