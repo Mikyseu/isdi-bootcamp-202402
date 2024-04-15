@@ -1,71 +1,55 @@
-import { logger, showFeedback } from "../utils";
+import { logger, showFeedback } from '../utils'
 
-import logic from "../logic";
+import CancelButton from './library/CancelButton'
 
-import { Component } from "react";
+import logic from '../logic'
+import SubmitButton from './library/SubmitButton'
 
-class CreatePost extends Component {
-  constructor() {
-    logger.debug("CreatePost");
+// import './CreatePost.sass'
 
-    super();
-  }
+function CreatePost(props) {
+    const handleSubmit = event => {
+        event.preventDefault()
 
-  componentDidMount() {
-    logger.debug("CreatePost -> componentDidMount");
-  }
+        const form = event.target
 
-  componentWillUnmount() {
-    logger.debug("CreatePost -> componentWillUnmount");
-  }
+        const image = form.image.value
+        const text = form.text.value
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+        try {
+            logic.createPost(image, text, error => {
+                if (error) {
+                    showFeedback(error)
 
-    const form = event.target;
+                    return
+                }
 
-    const image = form.image.value;
-    const text = form.text.value;
+                form.reset()
 
-    try {
-      logic.createPost(image, text);
-
-      form.reset();
-
-      this.props.onPostCreated();
-    } catch (error) {
-      showFeedback(error);
+                props.onPostCreated()
+            })
+        } catch (error) {
+            showFeedback(error)
+        }
     }
-  };
 
-  handleCancelClick = () => this.props.onCancelClick();
+    const handleCancelClick = () => props.onCancelClick()
 
-  render() {
-    logger.debug("CreatePost -> render");
+    logger.debug('CreatePost -> render')
 
-    return (
-      <section className="create-post">
-        <form onSubmit={this.handleSubmit}>
-          <label>Image</label>
-          <input id="image" type="text" />
+    return <section className="mb-[50px] fixed bottom-0 left-0 bg-white w-full box-border p-[5vw]">
+        <form onSubmit={handleSubmit} className="flex flex-col ">
+            <label>Image</label>
+            <input id="image" type="text" />
 
-          <label>Text</label>
-          <input id="text" type="text" />
+            <label>Text</label>
+            <input id="text" type="text" />
 
-          <button className="round-button submit-button" type="submit">
-            Create
-          </button>
+            <SubmitButton>Create</SubmitButton>
         </form>
 
-        <button
-          className="round-button cancel-button"
-          onClick={this.handleCancelClick}
-        >
-          Cancel
-        </button>
-      </section>
-    );
-  }
+        <CancelButton onClick={handleCancelClick} />
+    </section>
 }
 
-export default CreatePost;
+export default CreatePost

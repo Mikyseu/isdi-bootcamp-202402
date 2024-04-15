@@ -5,10 +5,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha data",
-    "test-inspect": "npx mocha --inspect-brk data"
+    "build": "tsc",
+    "inspect": "npx tsx --inspect-brk index.ts",
+    "start": "npx tsx index.ts",
+    "test": "npx mocha",
+    "test-inspect": "npx mocha --inspect-brk-",
+    "populate": "tsx data/populate.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.14",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.12.3",
+    "chai": "^5.1.0",
+    "mocha": "^10.4.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.2"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "com": "file:../com",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1",
+    "tracer": "^1.3.0"
+  }
 }

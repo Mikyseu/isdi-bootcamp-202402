@@ -1,62 +1,32 @@
-/*
-import React from 'react'
-
-//const Component = React.Component
-// same as
-const { Component } = React
-*/
 import { logger } from "../utils";
 
-import { Component } from "react";
-
-class Landing extends Component {
-  constructor() {
-    logger.debug("Landing");
-
-    super();
-  }
-
-  handleLoginClick = (event) => {
+function Landing(props) {
+  const handleLoginClick = (event) => {
     event.preventDefault();
 
-    this.props.onLoginClick();
+    props.onLoginClick();
   };
 
-  handleRegisterClick = (event) => {
+  const handleRegisterClick = (event) => {
     event.preventDefault();
 
-    this.props.onRegisterClick();
+    props.onRegisterClick();
   };
 
-  render() {
-    logger.debug("Landing -> render");
+  logger.debug("Landing -> render");
 
-    return (
-      <main>
-        <h1>Landing</h1>
-        <button
-          className="Login Register"
-          onClick={(event) => {
-            event.preventDefault();
-
-            this.props.onLoginClick();
-          }}
-        >
-          Login
-        </button>
-        <button
-          className="Login Register"
-          onClick={(event) => {
-            event.preventDefault();
-
-            this.props.onRegisterClick();
-          }}
-        >
-          Register
-        </button>
-      </main>
-    );
-  }
+  return (
+    <main className="my-[50px] px-[5vw]">
+      <h1 className="flex justify-center">Landing</h1>
+      <a  href="" onClick={handleLoginClick}>
+        Login
+      </a>{" "}
+      or{" "}
+      <a  href="" onClick={handleRegisterClick}>
+        Register
+      </a>
+    </main>
+  );
 }
 
 export default Landing;

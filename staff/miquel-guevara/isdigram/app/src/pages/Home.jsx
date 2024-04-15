@@ -1,107 +1,91 @@
-import { logger, showFeedback } from "../utils";
+import { logger, showFeedback } from '../utils'
 
-import logic from "../logic";
+import logic from '../logic'
 
-import { Component } from "react";
-import PostList from "../components/PostList";
-import CreatePost from "../components/CreatePost";
-import EditPost from "../components/EditPost";
+import { useState, useEffect } from 'react'
+import PostList from '../components/PostList'
+import CreatePost from '../components/CreatePost'
+import EditPost from '../components/EditPost'
 
-class Home extends Component {
-  constructor() {
-    logger.debug("Home");
+function Home(props) {
+    const [user, setUser] = useState(null)
+    const [view, setView] = useState(null)
+    const [stamp, setStamp] = useState(null)
+    const [post, setPost] = useState(null)
 
-    super();
+    useEffect(() => {
+        try {
+            logic.retrieveUser((error, user) => {
+                if (error) {
+                    showFeedback(error)
 
-    try {
-      const user = logic.retrieveUser();
+                    return
+                }
 
-      this.user = user;
-    } catch (error) {
-      showFeedback(error);
+                setUser(user)
+            })
+        } catch (error) {
+            showFeedback(error)
+        }
+    }, [])
+
+    const clearView = () => setView(null)
+
+    const handleCreatePostCancelClick = () => clearView()
+
+    const handlePostCreated = () => {
+        clearView()
+        setStamp(Date.now())
     }
 
-    this.state = { view: null, stamp: null, post: null };
-  }
+    const handleCreatePostClick = () => setView('create-post')
 
-  setState(state) {
-    logger.debug("Home -> setState", JSON.stringify(state));
-
-    super.setState(state);
-  }
-
-  clearView = () => this.setState({ view: null });
-
-  handleCreatePostCancelClick = () => this.clearView();
-
-  handlePostCreated = () => this.setState({ view: null, stamp: Date.now() });
-
-  handleCreatePostClick = () => this.setState({ view: "create-post" });
-
-  handleLogoutClick = () => {
-    try {
-      logic.logoutUser();
-    } catch (error) {
-      logic.cleanUpLoggedInUser();
-    } finally {
-      this.props.onUserLoggedOut();
+    const handleLogoutClick = () => {
+        try {
+            logic.logoutUser()
+        } catch (error) {
+            logic.cleanUpLoggedInUserId()
+        } finally {
+            props.onUserLoggedOut()
+        }
     }
-  };
 
-  handleEditPostCancelClick = () => this.clearView();
+    const handleEditPostCancelClick = () => clearView()
 
-  handleEditPostClick = (post) => this.setState({ view: "edit-post", post });
+    const handleEditPostClick = post => {
+        setView('edit-post')
+        setPost(post)
+    }
 
-  handlePostEdited = () =>
-    this.setState({ view: null, stamp: Date.now(), post: null });
+    const handlePostEdited = () => {
+        clearView()
+        setStamp(Date.now())
+        setPost(null)
+    }
 
-  render() {
-    logger.debug("Home -> render");
+    logger.debug('Home -> render')
 
-    return (
-      <main className="main">
-        <h1>Hello, {this.user.name}!</h1>
+    return <>
+        <header className=" fixed top-0 bg-white w-full">
+            {user && <h1>Hello, {user.name}!</h1>}
 
-        <nav>
-          <button
-            onClick={(event) => {
-              event.preventDefault();
+            <nav>
+                <button onClick={handleLogoutClick}>🚪</button>
+            </nav>
+        </header>
 
-              this.props.onChatClick();
-            }}
-          >
-            💬
-          </button>
+        <main className="my-[50px] px-[5vw]">
+            <PostList stamp={stamp} onEditPostClick={handleEditPostClick} />
 
-          <button onClick={this.handleLogoutClick}>🚪</button>
-        </nav>
+            {view === 'create-post' && <CreatePost onCancelClick={handleCreatePostCancelClick} onPostCreated={handlePostCreated} />}
 
-        <PostList
-          stamp={this.state.stamp}
-          onEditPostClick={this.handleEditPostClick}
-        />
+            {view === 'edit-post' && <EditPost post={post} onCancelClick={handleEditPostCancelClick} onPostEdited={handlePostEdited} />}
+        </main>
 
-        {this.state.view === "create-post" && (
-          <CreatePost
-            onCancelClick={this.handleCreatePostCancelClick}
-            onPostCreated={this.handlePostCreated}
-          />
-        )}
-
-        {this.state.view === "edit-post" && (
-          <EditPost
-            post={this.state.post}
-            onCancelClick={this.handleEditPostCancelClick}
-            onPostEdited={this.handlePostEdited}
-          />
-        )}
-
-        <footer className="footer">
-          <button onClick={this.handleCreatePostClick}>➕</button>
+        <footer className="fixed bottom-0 w-full h-[50px] flex justify-center items-center p-[10px] box-border bg-white">
+            <button onClick={handleCreatePostClick}>➕</button>
         </footer>
-      </main>
-    );
-  }
+    </>
 }
 
-export default Home;
+export default Home
