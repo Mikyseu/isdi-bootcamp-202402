@@ -1,47 +1,44 @@
-import { logger, showFeedback } from "../utils";
+import { logger } from '../utils'
 
-import logic from "../logic";
-import RoundButton from "../components/library/RoundButton";
+import logic from '../logic'
 
+import { useContext } from '../context'
 
-function Login(props) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+function Login({ onUserLoggedIn, onRegisterClick }) {
+    const { showFeedback } = useContext()
 
-    const form = event.target;
+    const handleSubmit = event => {
+        event.preventDefault()
 
-    const username = form.username.value;
-    const password = form.password.value;
+        const form = event.target
 
-    logger.debug("Login -> handleSubmit", username, password);
+        const username = form.username.value
+        const password = form.password.value
 
-    try {
-      logic.loginUser(username, password, (error) => {
-        if (error) {
-          showFeedback(error);
+        logger.debug('Login -> handleSubmit', username, password)
 
-          return;
+        try {
+            logic.loginUser(username, password)
+                .then(() => {
+                    form.reset()
+
+                    onUserLoggedIn()
+                })
+                .catch(error => showFeedback(error.message, 'error'))
+        } catch (error) {
+            showFeedback(error.message)
         }
-
-        form.reset();
-
-        props.onUserLoggedIn();
-      });
-    } catch (error) {
-      showFeedback(error);
     }
-  };
 
-  const handleRegisterClick = (event) => {
-    event.preventDefault();
+    const handleRegisterClick = event => {
+        event.preventDefault()
 
-    props.onRegisterClick();
-  };
+        onRegisterClick()
+    }
 
-  logger.debug("Login -> render");
+    logger.debug('Login -> render')
 
-  return (
-    <main className="my-[50px] px-[5vw]">
+  return <main className="my-[50px] px-[5vw]">
       <h1 className="flex justify-center">Login</h1>
 
       <form onSubmit={handleSubmit}>
@@ -60,7 +57,7 @@ function Login(props) {
         Register
       </a>
     </main>
-  );
+  
 }
 
 export default Login;

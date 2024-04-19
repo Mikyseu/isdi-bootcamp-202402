@@ -1,26 +1,24 @@
-import { logger, showFeedback } from '../utils'
+import { logger } from '../utils'
 
 import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 import Post from './Post'
 
-function PostList(props) {
+import { useContext } from '../context'
+
+function PostList({ stamp, onEditPostClick }) {
     const [posts, setPosts] = useState([])
+
+    const { showFeedback } = useContext()
 
     const loadPosts = () => {
         logger.debug('PostList -> loadPosts')
 
         try {
-            logic.retrievePosts((error, posts) => {
-                if (error) {
-                    showFeedback(error)
-
-                    return
-                }
-
-                setPosts(posts)
-            })
+            logic.retrievePosts()
+                .then(setPosts)
+                .catch(error => showFeedback(error.message, 'error'))
         } catch (error) {
             showFeedback(error)
         }
@@ -28,7 +26,7 @@ function PostList(props) {
 
     useEffect(() => {
         loadPosts()
-    }, [props.stamp])
+    }, [stamp])
 
     const handlePostDeleted = () => loadPosts()
 
