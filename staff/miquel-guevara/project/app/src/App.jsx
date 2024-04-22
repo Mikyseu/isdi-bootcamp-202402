@@ -1,4 +1,4 @@
-// import { logger } from './utils'
+import { logger } from './utils'
 
 import logic from './logic'
 import Login from './pages/Login'
@@ -57,7 +57,7 @@ function App() {
     setConfirm(null)
   }
 
-  // logger.debug('App -> render')
+  logger.debug('App -> render')
 
   return <>
     <Context.Provider value={{ showFeedback: handleFeedback, showConfirm: handleConfirm }}>

@@ -1,4 +1,4 @@
-// import { logger } from '../utils'
+import { logger } from '../utils'
 
 import logic from '../logic'
 
@@ -24,7 +24,7 @@ function Home({ onUserLoggedOut }) {
     }, [])
 
     return <>
-        <header >
+        <header>
             {user && <h1>Hello, {user.name}!</h1>}
 
         </header>
