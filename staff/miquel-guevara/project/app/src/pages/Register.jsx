@@ -39,8 +39,8 @@ function Register({ onUserRegistered, onLoginClick }) {
     logger.debug('Register -> render')
 
     return ( 
-        <div className="flex justify-center items-center h-screen bg-[#1B1F47]">
-        <main>
+        <main className="flex justify-center items-center h-screen bg-[#1B1F47]">
+        <div>
         
         <img className="w-[200px] absolute top-10" src="../../public/Logo-letras-blanco.png" alt="BAFFLE" />
 
@@ -63,11 +63,11 @@ function Register({ onUserRegistered, onLoginClick }) {
         </form>
 
         
-    </main>
+    </div>
                 <div class="fixed bottom-8 items-center">
                 <a href="" onClick={handleLoginClick} class="text-[#F7C815] mt-2 font-bold">Login</a>
                 </div>
-    </div>
+    </main>
 )
 }
 

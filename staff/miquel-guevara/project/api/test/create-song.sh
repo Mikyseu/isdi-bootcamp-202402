@@ -1,0 +1,1 @@
+curl -X POST -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"image":"https://cdn1.suno.ai/image_828deb0d-ddc5-4477-87ee-58219fa74584.png", "title": "Marching to Success" "song":"https://audiopipe.suno.ai/?item_id=828deb0d-ddc5-4477-87ee-58219fa74584"}' http://localhost:8383/songs -v

@@ -39,8 +39,8 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
     logger.debug('Login -> render')
 
     return (
-        <div className="flex justify-center items-center h-screen bg-[#1B1F47]">
-            <main>
+        <main className="flex justify-center items-center h-screen bg-[#1B1F47]">
+            <div>
                 
                
                 <img className="w-[200px] absolute top-20" src="../../public/Logo-letras-blanco.png" alt="BAFFLE" />
@@ -60,12 +60,12 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
                     <button className="bg-[#4C5D8B] hover:bg-[#6B99C3] text-white font-bold py-2 px-4 rounded mt-4" type="submit">Login</button>
                 </form>
     
-                </main>
+                </div>
                 <div class="fixed bottom-8 items-center">
-                   <p class="font-bold text-white">New user?<a href="" onClick={handleRegisterClick} class="text-[#F7C815] mt-2"> Sing up</a></p>
+                   <p class="font-bold text-white">New user?<a href="" onClick={handleRegisterClick} class="text-[#F7C815] mt-2"> Sign up</a></p>
                 </div>
 
-        </div>
+        </main>
     );
     
 }

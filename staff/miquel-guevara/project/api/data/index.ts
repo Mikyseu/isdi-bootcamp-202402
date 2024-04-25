@@ -4,6 +4,7 @@ const { Schema, model } = mongoose
 
 const { Types: { ObjectId } } = Schema
 
+
 type UserType = {
     name: string
     email: string
@@ -26,13 +27,13 @@ const user = new Schema ({
 
     username: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
 
     password: {
         type: String,
-        require: true,
+        required: true,
     },
 
     avatar: {
@@ -42,10 +43,43 @@ const user = new Schema ({
 
 })
 
+type SongType = {
+    author: ObjectId
+    image: string
+    title: string
+    songUrl: string
+}
+
+const song = new Schema({
+    author: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+
+    image: {
+        type: String,
+        required: true
+    },
+
+    title: {
+        type: String,
+        required: true
+    },
+
+    songUrl: {
+        type: String,
+        required: true
+    }
+})
+
 const User = model<UserType>('User', user)
+const Song = model<SongType>('Song', song)
 
 export {
     UserType,
-    User
+    User,
+    SongType,
+    Song
 }
 

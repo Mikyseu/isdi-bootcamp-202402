@@ -21,7 +21,7 @@ function registerUser(name: string, email: string, username: string, password: s
                 email: email,
                 username: username,
                 password: password,
-                avatar: null
+                avatar: ''
             }
 
             return User.create(user)

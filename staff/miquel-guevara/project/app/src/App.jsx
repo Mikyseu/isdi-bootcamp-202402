@@ -4,6 +4,8 @@ import logic from './logic'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import CreateSong  from './pages/createSong'
+import Profile from './pages/Profile'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 // import Feedback from './components/Feedback'
 import { useState } from 'react'
@@ -57,6 +59,8 @@ function App() {
     setConfirm(null)
   }
 
+
+
   logger.debug('App -> render')
 
   return <>
@@ -65,6 +69,7 @@ function App() {
         <Route path="/login" element={logic.isUserLoggedIn() ? <Navigate to="/" /> : <Login onRegisterClick={handleRegisterClick} onUserLoggedIn={handleUserLoggedIn} />} />
         <Route path="/register" element={logic.isUserLoggedIn() ? <Navigate to="/" /> : <Register onLoginClick={handleLoginClick} onUserRegistered={handleLoginClick} />} />
         <Route path="/*" element={logic.isUserLoggedIn() ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/login" />} />
+        <Route path="/createSong" element={<CreateSong/>}  />
       </Routes>
     </Context.Provider>
 

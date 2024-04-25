@@ -12,9 +12,9 @@ This application will gather the songs and their names from the website https://
 
 - find songs 
 - choose a song
-- songs list 
 - play the song
-- make a list of favorite songs
+- toggle favorite song
+- edit profile(profile picture)
 
 v0.1
 - add song
@@ -53,24 +53,12 @@ User
 - username (string, required)
 - password (string, required)
 - avatar (string, optional)
+- favs ([Song.id])
 
 
 Song
 - id (required)
-- url (string, required)
-- title (string, required)
-- image (string, required)
-- scroll (x, required)
-- volume (x, required)
-
-Songs list
-- id (required)
-- url (string, required)
+- code (string, required)
 - title (string, required)
 
-
-Favourite list
-- id (required)
-- url (string, required)
-- title (string, required)
  
