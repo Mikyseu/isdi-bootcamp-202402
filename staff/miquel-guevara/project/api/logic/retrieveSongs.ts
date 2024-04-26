@@ -1,18 +1,30 @@
-// import { ObjectId } from mongoose
+import { Schema } from 'mongoose'
 
-// import { validate, errors } from "com"
+const { Types: { ObjectId } } = Schema
 
-// import { User, Song} from '../data/index.ts'
+import { User, Song } from '../data/index.ts'
 
-// const { SystemError, NotFoundError } = errors
+import { validate, errors } from 'com'
 
-// function retrieveSongs(userId): Promise<[{ id: string, author: { id: string, username: string }, image: string, title: string, song: string}] | { id: string; author: { id: string; username: string; }; image: string; title: string; song: string; }[]> {
-//     validate.text(userId, 'userId', true)
+const { NotFoundError, SystemError } = errors
 
-// }
 
-function retrieveSongs(){
-    
+function retrieveSongs(userId: string): Promise<[{ image: String, title: String, description: String, type: String, price: number }] | { image: String, title: String, description: String, type: String, price: Number }[]> {
+
+    validate.text(userId, 'userId', true)
+
+    return User.findById(userId)
+        .catch(error => { throw new SystemError(error.message) })
+        .then(user => {
+            if (!user) throw new NotFoundError('user not found')
+
+            return Song.find().lean().exec()
+                .catch(error => { throw new SystemError(error.message) })
+        })
 }
 
 export default retrieveSongs
+
+
+
+

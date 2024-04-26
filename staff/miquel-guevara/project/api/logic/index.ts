@@ -3,7 +3,7 @@ import authenticateUser from './authenticateUser.ts'
 import retrieveUser from './retrieveUser.ts'
 
 import createSong from './createSong.ts'
-import retrieveSong from './retrieveSongs.ts'
+import retrieveSongs from './retrieveSongs.ts'
 
 const logic = {
     registerUser,
@@ -11,7 +11,7 @@ const logic = {
     retrieveUser,
 
     createSong,
-    retrieveSong
+    retrieveSongs
 }
 
 export default logic

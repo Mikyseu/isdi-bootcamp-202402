@@ -42,8 +42,9 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
         <main className="flex justify-center items-center h-screen bg-[#1B1F47]">
             <div>
                 
-               
+               <div className="flex justify-center items-center">
                 <img className="w-[200px] absolute top-20" src="../../public/Logo-letras-blanco.png" alt="BAFFLE" />
+               </div>
                 
 
                 <form onSubmit={handleSubmit} className="flex flex-col items-center mt-8">

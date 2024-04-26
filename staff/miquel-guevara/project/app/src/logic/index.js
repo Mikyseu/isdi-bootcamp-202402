@@ -6,6 +6,8 @@ import getLoggedInUserId from './getLoggedInUserId'
 import isUserLoggedIn from './isUserLoggedIn'
 import cleanUpLoggedInUserId from './cleanUpLoggedInUserId'
 
+import retrieveSongs from './retrieveSongs'
+
 
 const logic = {
     registerUser,
@@ -15,6 +17,8 @@ const logic = {
     getLoggedInUserId,
     isUserLoggedIn,
     cleanUpLoggedInUserId,
+
+    retrieveSongs,
 }
 
 export default logic
