@@ -38,7 +38,7 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
 
     logger.debug('Login -> render')
 
-    return (
+    return <>
         <main className="flex justify-center items-center h-screen bg-[#1B1F47]">
             <div>
                 
@@ -58,7 +58,7 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
                         <input type="password" id="password" className="rounded-lg px-2 py-1" />
                     </div>
     
-                    <button className="bg-[#4C5D8B] hover:bg-[#6B99C3] text-white font-bold py-2 px-4 rounded mt-4" type="submit">Login</button>
+                    <button className="bg-[#4C5D8B] hover:bg-[#6B99C3] text-white font-bold py-2 px-4 rounded mt-4 w-full" type="submit">Login</button>
                 </form>
     
                 </div>
@@ -67,7 +67,7 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
                 </div>
 
         </main>
-    );
+        </>
     
 }
 

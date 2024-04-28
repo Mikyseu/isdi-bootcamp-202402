@@ -13,13 +13,13 @@ type UserType = {
     avatar: string
 }
 
-const user = new Schema ({
+const user = new Schema({
     name: {
         type: String,
         required: true
     },
 
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true
@@ -38,7 +38,11 @@ const user = new Schema ({
 
     avatar: {
         type: String,
-        
+
+    },
+
+    favorite: {
+        type: Array,
     }
 
 })
