@@ -1,17 +1,13 @@
 import { logger } from './utils'
-
 import logic from './logic'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
-import CreateSong  from './pages/createSong'
- 
+import CreateSong  from './pages/CreateSong'
 import Profile from './pages/Profile'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-// import Feedback from './components/Feedback'
 import { useState } from 'react'
 import { Context } from './context'
-// import Confirm from './components/Confirm'
 import { errors } from 'com'
 
 const { UnauthorizedError } = errors
@@ -37,12 +33,9 @@ function App() {
   const handleFeedback = (error, level = 'warn') => {
     if (error instanceof UnauthorizedError) {
       logic.logoutUser()
-
       level = 'error'
-
       goToLogin()
     }
-
     setFeedback({ message: error.message, level })
   }
 
@@ -50,34 +43,34 @@ function App() {
 
   const handleConfirmCancelClick = () => {
     confirm.callback(false)
-
     setConfirm(null)
   }
 
   const handleConfirmAcceptClick = () => {
     confirm.callback(true)
-
     setConfirm(null)
   }
 
-
-
   logger.debug('App -> render')
 
-  return <>
-    <Context.Provider value={{ showFeedback: handleFeedback, showConfirm: handleConfirm }}>
-      <Routes>
-        <Route path="/login" element={logic.isUserLoggedIn() ? <Navigate to="/" /> : <Login onRegisterClick={handleRegisterClick} onUserLoggedIn={handleUserLoggedIn} />} />
-        <Route path="/register" element={logic.isUserLoggedIn() ? <Navigate to="/" /> : <Register onLoginClick={handleLoginClick} onUserRegistered={handleLoginClick} />} />
-        <Route path="/*" element={logic.isUserLoggedIn() ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/login" />} />
-        <Route path="/createSong" element={<CreateSong/>}  />
-      </Routes>
-    </Context.Provider>
+  return (
+    <>
+      <Context.Provider value={{ showFeedback: handleFeedback, showConfirm: handleConfirm }}>
+        <Routes>
+          <Route path="/login" element={logic.isUserLoggedIn() ? <Navigate to="/" /> : <Login onRegisterClick={handleRegisterClick} onUserLoggedIn={handleUserLoggedIn} />} />
+          <Route path="/register" element={logic.isUserLoggedIn() ? <Navigate to="/" /> : <Register onLoginClick={handleLoginClick} onUserRegistered={handleLoginClick} />} />
+          <Route path="/*" element={logic.isUserLoggedIn() ? <Home onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/login" />} />
+          <Route path="/profile" element={<Profile />}/>
+          <Route path="/profile" element={logic.isUserLoggedIn() ? <Profile onUserLoggedOut={handleUserLoggedOut} /> : <Navigate to="/login" />} />
+          <Route path="/createSong" element={<CreateSong />} />
+        </Routes>
+      </Context.Provider>
 
-    {feedback && <Feedback message={feedback.message} level={feedback.level} onAcceptClick={handleFeedbackAcceptClick} />}
+      {feedback && <Feedback message={feedback.message} level={feedback.level} onAcceptClick={handleFeedbackAcceptClick} />}
 
-    {confirm && <Confirm message="hola confirm" onCancelClick={handleConfirmCancelClick} onAcceptClick={handleConfirmAcceptClick} />}
-  </>
+      {confirm && <Confirm message="hola confirm" onCancelClick={handleConfirmCancelClick} onAcceptClick={handleConfirmAcceptClick} />}
+    </>
+  )
 }
 
 export default App

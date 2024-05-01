@@ -14,30 +14,32 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
       setDuration(audio.duration);
     };
 
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
     const handleEnded = () => {
       onSongComplete();
       setPlaying(false);
     };
 
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('ended', handleEnded);
 
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('ended', handleEnded);
     };
   }, [audioRef, onSongComplete]);
 
   useEffect(() => {
-    if (song && song.songUrl) {
+    if (song) {
       audioRef.current.load();
       setPlaying(true);
     }
   }, [song]);
-
-  const handleTimeUpdate = () => {
-    setCurrentTime(audioRef.current.currentTime);
-  };
 
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
@@ -77,19 +79,18 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
             <p className="font-bold text-white text-center">{song.title}</p>
             <audio
               ref={audioRef}
-              src={song.songUrl}
-              onTimeUpdate={handleTimeUpdate}
+              src={song.song}
               autoPlay={playing}
             />
             <div className="relative w-[180px] h-2 bg-[#ffffff] rounded-full mt-4">
               <div
-                className="absolute h-full bg-[#A5A5A5] rounded-full"
+                className="absolute h-full bg-[#6E8BB3] rounded-full"
                 style={{ width: `${(currentTime / duration) * 100}%` }}
               />
             </div>
             <div className="flex justify-between w-full mt-2">
-              <p className="text-white font-semibold">{currentTime.toFixed(2)}</p>
-              <p className="text-white font-semibold">{duration ? duration.toFixed(2) : '0.00'}</p>
+              <p className="text-white font-semibold">{formatTime(currentTime)}</p>
+              <p className="text-white font-semibold">{formatTime(duration)}</p>
             </div>
           </>
         )}
@@ -117,6 +118,13 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
       </div>
     </div>
   );
+}
+
+
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`; 
 }
 
 export default Footer;

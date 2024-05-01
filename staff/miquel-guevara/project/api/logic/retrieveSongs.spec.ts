@@ -10,10 +10,7 @@ import { errors } from 'com'
 
 dotenv.config()
 
-const { Types: { ObjectId } } = mongoose
-const { NotFoundError } = errors
-
-const { DuplicityError, CredentialsError } = errors
+const { DuplicityError, CredentialsError, NotFoundError } = errors
 
 describe('retrieveSongs', () => {
     before(() => mongoose.connect(process.env.MONGODB_TEST_URL))
@@ -24,17 +21,19 @@ describe('retrieveSongs', () => {
             Song.deleteMany()
         ])
             .then(() =>
-                User.create({ name: 'Miky Seu', email: 'miky@seu.com', password: '123qwe123' })
+                User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Miky', password: '123qwe123' })
                     .then(user =>
                         Promise.all([
-                            Song.create({ author: user._id, image: 'https://cdn1.suno.ai/image_4815c59a-56ad-4870-92c2-8a4713d8da88.png', title: 'Marching to Success', songUrl: 'https://cdn1.suno.ai/4815c59a-56ad-4870-92c2-8a4713d8da88.mp3' }),
-                            Song.create({ author: user._id, image: 'https://cdn1.suno.ai/image_512ff9f2-3990-4005-b410-5f56a81eea45.png', title: 'afro-jazz verdean', songUrl: 'https://cdn1.suno.ai/512ff9f2-3990-4005-b410-5f56a81eea45.mp3' }),
-                            Song.create({ author: user._id, image: 'https://cdn1.suno.ai/image_fe2e6d06-1dd5-4458-8426-6cb742fce01c.png', title: 'ambient house 16-bit', songUrl: 'https://cdn1.suno.ai/fe2e6d06-1dd5-4458-8426-6cb742fce01c.mp3' }),
+                            Song.create({ user: user._id.toString(), title: 'Marching to Success', sunoId: '4815c59a-56ad-4870-92c2-8a4713d8da88' }),
+                            Song.create({ user: user._id.toString(), title: 'afro-jazz verdean', sunoId: '512ff9f2-3990-4005-b410-5f56a81eea45' }),
+                            Song.create({ user: user._id.toString(), title: 'ambient house 16-bit', sunoId: 'fe2e6d06-1dd5-4458-8426-6cb742fce01c' }),
                         ])
                             .then(([song1, song2, song3]) =>
-                                logic.retrieveSongs(user.id)
+                                logic.retrieveSongs(user._id.toString())
                                     .then(songs => {
                                         expect(songs).to.have.lengthOf(3)
+
+                                        const foundSong1 = songs.find(song => song.title === song1.title)
 
                                         expect(foundSong1.title).to.equal('Marching to Success')
 
@@ -54,7 +53,7 @@ describe('retrieveSongs', () => {
             )
     )
 
-    // Test that checks if an empty array is returned when there are no songs for the user
+
 
 
     it('retrieves an empty array when there are no songs for the user', () =>
@@ -63,7 +62,7 @@ describe('retrieveSongs', () => {
             Song.deleteMany()
         ])
             .then(() =>
-                User.create({ name: 'John Doe', email: 'john@doe.com', password: 'password' })
+                User.create({ name: 'Pol Jan', email: 'pol@jan.com', username: 'Pol', password: '123qwe123' })
                     .then(user =>
                         logic.retrieveSongs(user.id)
                             .then(songs => {

@@ -10,7 +10,7 @@ type UserType = {
     email: string
     username: string
     password: string
-    avatar: string
+    avatar?: string
 }
 
 const user = new Schema({
@@ -48,21 +48,15 @@ const user = new Schema({
 })
 
 type SongType = {
-    author: ObjectId
-    image: string
+    user: ObjectId
     title: string
-    songUrl: string
+    songId: string
 }
 
 const song = new Schema({
-    author: {
+    user: {
         type: ObjectId,
         ref: 'User',
-        required: true
-    },
-
-    image: {
-        type: String,
         required: true
     },
 
@@ -71,7 +65,7 @@ const song = new Schema({
         required: true
     },
 
-    songUrl: {
+    sunoId: {
         type: String,
         required: true
     }

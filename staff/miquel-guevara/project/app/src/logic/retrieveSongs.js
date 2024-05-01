@@ -1,9 +1,7 @@
 import { validate, errors } from 'com'
 
 function retrieveSongs() {
-
     validate.token(sessionStorage.token)
-
 
     return fetch(`${import.meta.env.VITE_API_URL}/songs`, {
         headers: {

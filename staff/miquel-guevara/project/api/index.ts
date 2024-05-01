@@ -191,19 +191,18 @@ mongoose.connect(MONGODB_URL)
         // api.post('/song', jsonBodyParser, (req, res) => {
         //     try {
 
+        //         const song = JSON.parse(req.body)
 
-        //         const song = JSON.parse (req.body)
 
+        //         const { authorization } = req.headers
 
-        //         // const { authorization } = req.headers
+        //         const token = authorization.slice(7)
 
-        //         // const token = authorization.slice(7)
+        //         const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        //         // const { sub: userId } = jwt.verify(token, JWT_SECRET)
+        //         const { image, title, text } = req.body
 
-        //         // const { image, text } = req.body
-
-        //         logic.createSong(song.author, song.userId, song.image, song.title, song.song)
+        //         logic.createSong(song)
         //             .then(() => res.status(201).send())
         //             .catch(error => {
         //                 if (error instanceof SystemError) {

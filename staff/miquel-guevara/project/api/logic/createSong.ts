@@ -1,26 +1,26 @@
+// create-song.ts
+
 import { validate, errors } from 'com';
-import { UserType, User, Song } from '../data/index.ts'
-import { create } from 'domain';
+import { User, Song } from '../data/index.ts'
 
 const { SystemError, NotFoundError } = errors;
 
-function createSong(songData: { author: string, userId: string, image: string, title: string, song: string }): Promise<void> {
-    const { author, userId, image, title, song } = songData;
 
-    validate.text(author, 'author');
+
+function createSong(userId: string, title: string, sunoId: string): Promise<any> {
     validate.text(userId, 'userId', true);
-    validate.url(image, 'image');
     validate.text(title, 'title');
-    validate.url(song, 'song');
+    validate.text(sunoId, 'sunoId');
 
     return User.findById(userId)
-        .catch(error => { throw new SystemError(error.message); })
         .then(user => {
             if (!user)
                 throw new NotFoundError('user not found');
 
-            return Song.create({ author: author, user: userId, image: image, title: title, song: song })
-                .catch(error => { throw new SystemError(error.message); });
+            return Song.create({ user: userId, title: title, sunoId: sunoId });
+        })
+        .catch(error => {
+            throw new SystemError(error.message);
         });
 }
 
