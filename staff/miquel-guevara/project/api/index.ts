@@ -7,6 +7,7 @@ import tracer from 'tracer'
 import colors from 'colors'
 import jwt from 'jsonwebtoken'
 import cors from 'cors'
+import updateUserAvatar from './logic/updateUserAvatar.ts'
 
 dotenv.config()
 
@@ -188,49 +189,67 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        // api.post('/song', jsonBodyParser, (req, res) => {
-        //     try {
-
-        //         const song = JSON.parse(req.body)
+        api.post('/songs', jsonBodyParser, (req, res) => {
+            try {
 
 
-        //         const { authorization } = req.headers
+                const { authorization } = req.headers
 
-        //         const token = authorization.slice(7)
+                const token = authorization.slice(7)
 
-        //         const { sub: userId } = jwt.verify(token, JWT_SECRET)
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-        //         const { image, title, text } = req.body
+                const { title, sunoId } = req.body
 
-        //         logic.createSong(song)
-        //             .then(() => res.status(201).send())
-        //             .catch(error => {
-        //                 if (error instanceof SystemError) {
-        //                     logger.error(error.message)
+                logic.createSong(userId as string, title, sunoId)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof SystemError) {
+                            logger.error(error.message)
 
-        //                     res.status(500).json({ error: error.constructor.name, message: error.message })
-        //                 } else if (error instanceof NotFoundError) {
-        //                     logger.warn(error.message)
+                            res.status(500).json({ error: error.constructor.name, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.warn(error.message)
 
-        //                     res.status(404).json({ error: error.constructor.name, message: error.message })
-        //                 }
-        //             })
-        //     } catch (error) {
-        //         if (error instanceof TypeError || error instanceof ContentError) {
-        //             logger.warn(error.message)
+                            res.status(404).json({ error: error.constructor.name, message: error.message })
+                        }
+                    })
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ContentError) {
+                    logger.warn(error.message)
 
-        //             res.status(406).json({ error: error.constructor.name, message: error.message })
-        //         } else if (error instanceof TokenExpiredError) {
-        //             logger.warn(error.message)
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                } else if (error instanceof TokenExpiredError) {
+                    logger.warn(error.message)
 
-        //             res.status(498).json({ error: UnauthorizedError.name, message: 'session expired' })
-        //         } else {
-        //             logger.warn(error.message)
+                    res.status(498).json({ error: UnauthorizedError.name, message: 'session expired' })
+                } else {
+                    logger.warn(error.message)
 
-        //             res.status(500).json({ error: SystemError.name, message: error.message })
-        //         }
-        //     }
-        // })
+                    res.status(500).json({ error: SystemError.name, message: error.message })
+                }
+            }
+        })
+
+
+
+
+        api.patch('/users/:username/avatar', jsonBodyParser, async (req, res) => {
+            try {
+                const { username } = req.params;
+                const { avatar } = req.body;
+
+
+                updateUserAvatar(username, avatar);
+
+
+                res.status(200).json({ message: 'avatar updated successfully' });
+            } catch (error) {
+
+                console.error('Error updating user avatar:', error);
+                res.status(500).json({ error: 'Error updating user avatar' });
+            }
+        });
 
 
         api.listen(PORT, () => logger.info(`API listening on port ${PORT}`))

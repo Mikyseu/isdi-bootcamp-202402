@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import logic from '../logic';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-function Header({ onUserLoggedOut }) {
+function Header({ onUserLoggedOut, stamp }) {
+  const params = useParams();
+  console.log(params);
+
   const [user, setUser] = useState(null);
 
   const handleLogoutClick = () => {
@@ -24,35 +28,34 @@ function Header({ onUserLoggedOut }) {
     } catch (error) {
       console.log(error);
     }
-  }, []);
-
+  }, [stamp]);
+  console.log(params.username);
   return (
-    <header className="flex items-center bg-[#1B1F47] p-1 ">
-      <Link to="/profile">
-        <button>
-          {user && user.avatar ? (
-            <img
-              src={user.avatar}
-              alt="profile pic"
-              className="w-20 h-20 rounded-full mr-4"
-            ></img>
-          ) : (
-            <img
-              className="w-20 h-20 rounded-full mr-2"
-              src="../../public/Avatarsimbol.png"
-              alt="profile pic"
-            ></img>
-          )}
-        </button>
+    <header className="flex items-center bg-[#1B1F47] p-2 ">
+      <Link to={`/profile/:username`}>
+        {user && user.avatar ? (
+          <img
+            src={user.avatar}
+            alt="profile pic"
+            className="w-16 h-16 rounded-full object-cover mr-4"
+          />
+        ) : (
+          <img
+            className="w-16 h-16 rounded-full object-cover mr-2"
+            src="/Avatarsimbol.png"
+            alt="profile pic"
+          />
+        )}
       </Link>
 
       <div className="flex flex-col">
-        {user && <h1 className="text-white font-bold text-lg">{user.name}</h1>}
+        {user && (
+          <h1 className="text-white font-bold text-lg">{user.username}</h1>
+        )}
         {user && <p className="text-white text-lg font-light">{user.email}</p>}
       </div>
 
       <button className="ml-auto mr-1 " onClick={handleLogoutClick}>
-        {' '}
         <img
           src="../../public/logoutIcon.png"
           alt="menu"

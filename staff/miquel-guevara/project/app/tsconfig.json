@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "../api/logic/updateUserAvatar.ts", "../api/logic/getUserAvatar.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

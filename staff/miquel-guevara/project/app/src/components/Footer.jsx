@@ -32,7 +32,7 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [audioRef, onSongComplete]);
+  }, [audioRef.current, onSongComplete]);
 
   useEffect(() => {
     if (song) {
@@ -46,12 +46,14 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
   };
 
   const handlePlay = () => {
-    if (playing) {
-      audioRef.current.pause();
+    const audio = audioRef.current;
+    if (audio.paused) {
+      audio.play();
+      setPlaying(true);
     } else {
-      audioRef.current.play();
+      audio.pause();
+      setPlaying(false);
     }
-    setPlaying(!playing);
   };
 
   const skipForward = () => {
@@ -77,11 +79,7 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
         {song && (
           <>
             <p className="font-bold text-white text-center">{song.title}</p>
-            <audio
-              ref={audioRef}
-              src={song.song}
-              autoPlay={playing}
-            />
+            <audio ref={audioRef} src={song.song} autoPlay={playing} />
             <div className="relative w-[180px] h-2 bg-[#ffffff] rounded-full mt-4">
               <div
                 className="absolute h-full bg-[#6E8BB3] rounded-full"
@@ -89,27 +87,41 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
               />
             </div>
             <div className="flex justify-between w-full mt-2">
-              <p className="text-white font-semibold">{formatTime(currentTime)}</p>
+              <p className="text-white font-semibold">
+                {formatTime(currentTime)}
+              </p>
               <p className="text-white font-semibold">{formatTime(duration)}</p>
             </div>
           </>
         )}
         <div className="flex w-full justify-between mt-2">
           <button onClick={handlePreviousSong}>
-            <img src="../public/backward.png" alt="previous" className="w-4 h-4" />
+            <img
+              src="../public/backward.png"
+              alt="previous"
+              className="w-4 h-4"
+            />
           </button>
           <button onClick={skipBackward}>
-            <img src="../public/rewind-left.png" alt="backward" className="w-4 h-4" />
+            <img
+              src="../public/rewind-left.png"
+              alt="backward"
+              className="w-4 h-4"
+            />
           </button>
           <button onClick={handlePlay}>
-            {playing ?
+            {playing ? (
               <img src="../public/pause.png" alt="pause" className="w-5 h-5" />
-              :
+            ) : (
               <img src="../public/play.png" alt="play" className="w-5 h-5 " />
-            }
+            )}
           </button>
           <button onClick={skipForward}>
-            <img src="../public/rewind-right.png" alt="next" className="w-4 h-4" />
+            <img
+              src="../public/rewind-right.png"
+              alt="next"
+              className="w-4 h-4"
+            />
           </button>
           <button onClick={handleNextSong}>
             <img src="../public/next.png" alt="next" className="w-4 h-4" />
@@ -120,11 +132,10 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
   );
 }
 
-
 function formatTime(time) {
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`; 
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
 export default Footer;

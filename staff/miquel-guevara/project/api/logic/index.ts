@@ -5,13 +5,17 @@ import retrieveUser from './retrieveUser.ts'
 import createSong from './createSong.ts'
 import retrieveSongs from './retrieveSongs.ts'
 
+import updateUserAvatar from './updateUserAvatar.ts'
+
 const logic = {
     registerUser,
     authenticateUser,
     retrieveUser,
 
     createSong,
-    retrieveSongs
+    retrieveSongs,
+
+    updateUserAvatar
 }
 
 export default logic

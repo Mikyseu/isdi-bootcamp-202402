@@ -41,7 +41,7 @@ const user = new Schema({
 
     },
 
-    favorite: {
+    favorites: {
         type: Array,
     }
 

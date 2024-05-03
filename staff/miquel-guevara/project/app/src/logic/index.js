@@ -9,6 +9,8 @@ import cleanUpLoggedInUserId from './cleanUpLoggedInUserId'
 import retrieveSongs from './retrieveSongs'
 import createSong from './createSong'
 
+import updateUserAvatar from './updateUserAvatar'
+
 
 const logic = {
     registerUser,
@@ -20,7 +22,9 @@ const logic = {
     cleanUpLoggedInUserId,
 
     retrieveSongs,
-    createSong
+    createSong,
+
+    updateUserAvatar
 }
 
 export default logic
