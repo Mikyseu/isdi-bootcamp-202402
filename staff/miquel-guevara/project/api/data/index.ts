@@ -11,6 +11,7 @@ type UserType = {
     username: string
     password: string
     avatar?: string
+    favorites: Array<String>
 }
 
 const user = new Schema({

@@ -231,6 +231,105 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
+        api.get('/favorites', async (req, res) => {
+            try {
+                const { authorization } = req.headers
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+
+                const songList = await logic.retrieveFavSongs(userId)
+                // controlar tot aixo
+
+                res.status(200).json(songList)
+
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ContentError) {
+                    logger.warn(error.message)
+
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                } else if (error instanceof TokenExpiredError) {
+                    logger.warn(error.message)
+
+                    res.status(498).json({ error: error.constructor.name, message: error.message })
+                } else {
+                    logger.warn(error.message)
+
+                    res.status(500).json({ error: error.constructor.name, message: error.message })
+                }
+            }
+        })
+
+
+        api.post('/favorites/:songId', jsonBodyParser, (req, res) => {
+            try {
+                const { authorization } = req.headers
+
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                const { songId } = req.params
+
+                res.status(200).json(logic.addFavSong(songId, userId))
+
+
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ContentError) {
+                    logger.warn(error.message)
+
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                } else if (error instanceof TokenExpiredError) {
+                    logger.warn(error.message)
+
+                    res.status(498).json({ error: error.constructor.name, message: error.message })
+                } else {
+                    logger.warn(error.message)
+
+                    res.status(500).json({ error: error.constructor.name, message: error.message })
+                }
+            }
+        })
+
+
+        api.delete('/favorites/:songId', jsonBodyParser, (req, res) => {
+
+            try {
+                const { authorization } = req.headers
+
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                const { songId } = req.params
+
+                res.status(200).json(logic.removeFavSong(songId, userId))
+
+
+
+
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ContentError) {
+                    logger.warn(error.message)
+
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                } else if (error instanceof TokenExpiredError) {
+                    logger.warn(error.message)
+
+                    res.status(498).json({ error: error.constructor.name, message: error.message })
+                } else {
+                    logger.warn(error.message)
+
+                    res.status(500).json({ error: error.constructor.name, message: error.message })
+                }
+            }
+
+        })
 
 
 

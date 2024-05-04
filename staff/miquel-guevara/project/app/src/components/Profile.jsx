@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CreateSong from '../components/CreateSong';
 import logic from '../logic';
+import SongList from './SongList';
 
-function Profile() {
+function Profile({ currentSong, playList }) {
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
@@ -43,7 +44,7 @@ function Profile() {
   };
 
   return (
-    <main className="h-screen bg-[#6E8BB3] flex justify-between items-start p-4">
+    <section className="h-screen bg-[#6E8BB3] flex justify-between items-start mt-4 mx-4 ">
       <Link to="/">
         <img src="../../public/home.png" alt="home" className="w-8 h-8" />
       </Link>
@@ -91,7 +92,12 @@ function Profile() {
           onSongCreated={handleSongCreated}
         />
       )}
-    </main>
+      <SongList
+        userFavorites={true}
+        currentSong={currentSong}
+        playList={playList}
+      />
+    </section>
   );
 }
 

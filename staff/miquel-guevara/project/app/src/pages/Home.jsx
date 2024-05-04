@@ -7,7 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 
 function Home({ onUserLoggedOut }) {
   const [currentSong, setCurrentSong] = useState(null);
-
+  const [playList, setPlayList] = useState(null);
   const changeCurrentSong = selectedSong => {
     setCurrentSong(selectedSong);
   };
@@ -15,21 +15,33 @@ function Home({ onUserLoggedOut }) {
 
   //una vez actualice el profile la foto tendria que setear el estado con un new date
 
+  const handlePlayListChange = playList => {
+    setPlayList(playList);
+  };
+
   return (
     <>
       <main className="min-h-screen bg-[#6E8BB3]">
-        {/* <SongList currentSong={changeCurrentSong} /> */}
-
         <Header onUserLoggedOut={onUserLoggedOut} stamp={stamp} />
         <Routes>
           <Route
             path="/"
-            element={<SongList currentSong={changeCurrentSong} />}
+            element={
+              <SongList
+                currentSong={changeCurrentSong}
+                playList={handlePlayListChange}
+              />
+            }
           />
-          <Route path="/profile/:username" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile currentSong={changeCurrentSong} playList={playList} />
+            }
+          />
         </Routes>
 
-        <Footer song={currentSong} />
+        <Footer song={currentSong} playList={playList} />
       </main>
     </>
   );

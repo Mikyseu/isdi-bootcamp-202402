@@ -32,7 +32,7 @@ function Header({ onUserLoggedOut, stamp }) {
   console.log(params.username);
   return (
     <header className="flex items-center bg-[#1B1F47] p-2 ">
-      <Link to={`/profile/:username`}>
+      <Link to={`/profile`}>
         {user && user.avatar ? (
           <img
             src={user.avatar}

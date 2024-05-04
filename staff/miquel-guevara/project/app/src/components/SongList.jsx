@@ -1,32 +1,48 @@
-//"renderiza de nuevo el componente" el toggle lo llamas cuando llamas a los fav
-
 import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 
-function SongList({ currentSong }) {
+function SongList({ currentSong, userFavorites, playList }) {
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
+  const [addFav, setAddFav] = useState(null);
+  const [songFavId, setSongFavId] = useState('');
+  const [runEffect, setRunEffect] = useState(false);
 
   useEffect(() => {
     try {
       logic
-        .retrieveSongs()
+        .retrieveSongs(userFavorites)
         .then(allSongs => {
+          console.log(allSongs);
           const formattedSongs = allSongs.map(song => ({
             id: song._id,
             title: song.title,
             song: `https://cdn1.suno.ai/${song.sunoId}.mp3`,
             image: `https://cdn1.suno.ai/image_${song.sunoId}.png`,
-            favorite: false,
+            favorite: song.favorite,
           }));
           setSongs(formattedSongs);
-          setFilteredSongs(formattedSongs); // Set filtered songs initially to all songs
+          setFilteredSongs(formattedSongs);
+          playList(formattedSongs);
         })
         .catch(error => console.log(error));
     } catch (error) {
       console.log(error);
     }
   }, []);
+
+  //mirar el fallo
+  useEffect(() => {
+    try {
+      if (addFav) {
+        logic.addFavorite(songFavId);
+      } else {
+        logic.removeFavorite(songFavId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [runEffect]);
 
   const handleSelectedSong = song => {
     currentSong(song);
@@ -41,14 +57,23 @@ function SongList({ currentSong }) {
 
   const handlePlayFirstSong = () => {
     if (filteredSongs.length > 0) {
-      handleSelectedSong(filteredSongs[0]); // Play the first song from filtered songs
+      handleSelectedSong(filteredSongs[0]);
     }
   };
 
   const handleFav = id => {
-    const updatedSongs = filteredSongs.map(song =>
-      song.id === id ? { ...song, favorite: !song.favorite } : song,
-    );
+    setSongFavId(id);
+    setRunEffect(!runEffect);
+
+    const updatedSongs = filteredSongs.map(song => {
+      if (song.id === id) {
+        setAddFav(!song.favorite);
+
+        return { ...song, favorite: !song.favorite };
+      } else {
+        return song;
+      }
+    });
     setFilteredSongs(updatedSongs);
   };
 
@@ -78,18 +103,18 @@ function SongList({ currentSong }) {
               className="text-white font-semibold flex justify-between items-center mr-4"
             >
               <span>{song.title}</span>
-              <button onClick={() => handleFav(song.id)}>
-                <img
-                  src={
-                    song.favorite
-                      ? '../public/heart.png'
-                      : '../public/heart-empty.png'
-                  }
-                  alt="fav"
-                  className="w-5 h-5"
-                />
-              </button>
             </a>
+            <button onClick={() => handleFav(song.id)}>
+              <img
+                src={
+                  song.favorite
+                    ? '../public/heart.png'
+                    : '../public/heart-empty.png'
+                }
+                alt="fav"
+                className="w-5 h-5"
+              />
+            </button>
           </li>
         ))}
       </ul>

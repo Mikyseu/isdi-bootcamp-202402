@@ -1,10 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
+function Footer({
+  song,
+  onPreviousSong,
+  onNextSong,
+  onSongComplete,
+  playList,
+}) {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [songToPlay, setSongToPlay] = useState(song);
+
+  //TODO mirar de que es reprodueixi al tocar canço i el boto PLAYLIST
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -35,11 +44,11 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
   }, [audioRef.current, onSongComplete]);
 
   useEffect(() => {
-    if (song) {
+    if (songToPlay) {
       audioRef.current.load();
       setPlaying(true);
     }
-  }, [song]);
+  }, [songToPlay]);
 
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
@@ -61,25 +70,31 @@ function Footer({ song, onPreviousSong, onNextSong, onSongComplete }) {
   };
 
   const handleNextSong = () => {
-    onNextSong();
+    //TODO: Aixo falla a la ultima
+    const songIndex = playList.indexOf(songToPlay);
+    setSongToPlay(playList[songIndex + 1]);
   };
 
   const handlePreviousSong = () => {
-    onPreviousSong();
+    //TODO: Això falla a la primera
+    const songIndex = playList.indexOf(songToPlay);
+    setSongToPlay(playList[songIndex - 1]);
   };
 
   return (
     <div className="fixed bottom-0 w-full h-[140px] flex justify-center items-center p-4 box-border bg-[#1B1F47] ">
-      {song && (
+      {songToPlay && (
         <div className="flex flex-col items-start">
-          <img src={song.image} className="w-20 h-20 " alt="Image song" />
+          <img src={songToPlay.image} className="w-20 h-20 " alt="Image song" />
         </div>
       )}
       <div className="flex flex-col items-start ml-4 ">
-        {song && (
+        {songToPlay && (
           <>
-            <p className="font-bold text-white text-center">{song.title}</p>
-            <audio ref={audioRef} src={song.song} autoPlay={playing} />
+            <p className="font-bold text-white text-center">
+              {songToPlay.title}
+            </p>
+            <audio ref={audioRef} src={songToPlay.song} autoPlay={playing} />
             <div className="relative w-[180px] h-2 bg-[#ffffff] rounded-full mt-4">
               <div
                 className="absolute h-full bg-[#6E8BB3] rounded-full"

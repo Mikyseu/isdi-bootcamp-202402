@@ -8,11 +8,10 @@ function CreateSongComponent({ onCancelClick }) {
 
     const form = event.target;
     const title = form.title.value;
-    const song = form.song.value;
+    const sunoId = form.sunoId.value;
 
     try {
-      // No se está utilizando userId o sunoId, ¿estás seguro de que los necesitas aquí?
-      logic.createSong({ title, song }).then(() => {
+      logic.createSong({ title, sunoId }).then(() => {
         form.reset();
       });
     } catch (error) {
@@ -21,16 +20,8 @@ function CreateSongComponent({ onCancelClick }) {
   };
 
   return (
-    <main className="h-screen flex justify-center items-center bg-black bg-opacity-40">
-      <div className="bg-white p-8 rounded-lg">
-        <Link to="/" className="absolute top-4 left-4">
-          <img
-            src="../../public/homeclear.png"
-            className="w-8 h-8 "
-            alt="Home"
-          />
-        </Link>
-
+    <main className="h-screen w-screen fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40">
+      <div className="bg-[#6E8BB3] p-4 rounded-lg">
         <form
           onSubmit={handleCreateSongClick}
           className="flex flex-col items-center"
@@ -43,10 +34,10 @@ function CreateSongComponent({ onCancelClick }) {
           </div>
 
           <div className="flex flex-col mb-4">
-            <label htmlFor="song" className="text-white mb-1">
-              Song
+            <label htmlFor="sunoId" className="text-white mb-1">
+              SunoId
             </label>
-            <input id="song" className="rounded-lg px-2 py-1" />
+            <input id="sunoId" className="rounded-lg px-2 py-1" />
           </div>
 
           <button

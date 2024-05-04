@@ -1,1 +1,0 @@
-//traer el user.id traer el id de la cancion, si en la lista de fav del user no existe la id de la canion hacer un push y en el caso de qui exista quitarlo "filter" esta logica es la que llamo cuando le doy al corazon

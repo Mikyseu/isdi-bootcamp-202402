@@ -1,15 +1,19 @@
-function createSong(song) {
-    const json = JSON.stringify(song);
+import { validate, errors } from 'com'
 
-    return fetch(`${import.meta.env.VITE_API_URL}/song`, {
+function createSong(song) {
+    validate.token(sessionStorage.token)
+    const json = JSON.stringify(song);
+    console.log(json)
+    return fetch(`${import.meta.env.VITE_API_URL}/songs`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.token}`
         },
         body: json
     })
         .then(res => {
-            if (res.status === 200)
+            if (res.status === 201)
                 return res.json();
             else
                 throw new Error('Error creating song');

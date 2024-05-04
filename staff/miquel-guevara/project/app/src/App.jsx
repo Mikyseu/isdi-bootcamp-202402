@@ -99,7 +99,7 @@ function App() {
         </Routes>
       </Context.Provider>
 
-      {feedback && (
+      {/* {feedback && (
         <Feedback
           message={feedback.message}
           level={feedback.level}
@@ -113,7 +113,7 @@ function App() {
           onCancelClick={handleConfirmCancelClick}
           onAcceptClick={handleConfirmAcceptClick}
         />
-      )}
+      )} */}
     </>
   );
 }
