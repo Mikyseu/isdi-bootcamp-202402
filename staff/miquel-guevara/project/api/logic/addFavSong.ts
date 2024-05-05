@@ -1,11 +1,10 @@
 // @ts-nocheck
 
-import { User } from "../data";
-import { SystemError } from "com/errors";
+import { User } from "../data/index.ts";
+import { SystemError } from "../../com/errors.ts";
 
 function addFavSong(songId, userId) {
-    console.log(songId)
-    console.log(userId)
+
     try {
         return User.findById(userId)
             .catch(error => { throw new SystemError(error.message) })

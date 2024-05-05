@@ -96,13 +96,13 @@ function SongList({ currentSong, userFavorites, playList }) {
 
       <ul className="max-h-[calc(100vh - 280px)] overflow-y-auto mt-4">
         {filteredSongs.map(song => (
-          <li key={song.id}>
+          <li key={song.id} className="flex justify-between items-center">
             <a
               href="#"
               onClick={() => handleSelectedSong(song)}
-              className="text-white font-semibold flex justify-between items-center mr-4"
+              className="text-white font-semibold"
             >
-              <span>{song.title}</span>
+              {song.title}
             </a>
             <button onClick={() => handleFav(song.id)}>
               <img

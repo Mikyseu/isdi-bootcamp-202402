@@ -1,9 +1,14 @@
-import { User } from '../data/index';
+import { User } from '../data/index.ts';
 
-function updateUserAvatar(userId, newAvatar) {
+async function updateUserAvatar(userId, newAvatar) {
     try {
-        User.updateOne({ userId }, { $set: { avatar: newAvatar } });
-        return 'Avatar correct';
+        const result = await User.updateOne({ _id: userId }, { $set: { avatar: newAvatar } });
+
+        if (result.modifiedCount === 0) {
+            throw new Error('The user was not found or the avatar was already updated.');
+        }
+
+        return 'Avatar updated successfully';
     } catch (error) {
         throw new Error('Error updating user avatar: ' + error.message);
     }

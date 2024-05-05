@@ -1,6 +1,6 @@
 
-import { User, Song } from "../data";
-import { SystemError } from "com/errors";
+import { User, Song } from "../data/index.ts";
+import { SystemError } from "../../com/errors.ts";
 
 
 function retrieveFavSongs(userId) {

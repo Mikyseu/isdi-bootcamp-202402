@@ -1,6 +1,6 @@
 
-import { SystemError } from "com/errors";
-import { User } from "../data";
+import { SystemError } from "../../com/errors.ts";
+import { User } from "../data/index.ts";
 
 function removeFavSong(songId, userId) {
 
@@ -19,7 +19,6 @@ function removeFavSong(songId, userId) {
             } else { throw new SystemError("song does not exist") }
 
         })
-
 
 }
 
