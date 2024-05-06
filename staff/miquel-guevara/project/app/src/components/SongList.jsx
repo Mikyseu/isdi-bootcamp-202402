@@ -6,9 +6,9 @@ function SongList({ currentSong, userFavorites, playList }) {
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [favSongs, setFavSongs] = useState(null);
   const [songFavId, setSongFavId] = useState(null);
-  const [runEffect, setRunEffect] = useState(false);
+  const [favBoolean, setFavBoolean] = useState(false);
 
-  console.log('userFavorites: ', userFavorites);
+  // console.log('userFavorites: ', userFavorites);
   useEffect(() => {
     try {
       logic
@@ -40,7 +40,7 @@ function SongList({ currentSong, userFavorites, playList }) {
     } catch (error) {
       console.log(error);
     }
-  }, [runEffect]);
+  }, [favBoolean]);
 
   const handleSelectedSong = song => {
     currentSong(song);
@@ -61,7 +61,7 @@ function SongList({ currentSong, userFavorites, playList }) {
 
   const handleFav = id => {
     setSongFavId(id);
-    setRunEffect(!runEffect);
+    setFavBoolean(!favBoolean);
     // console.log('filteredSongs ::: ', filteredSongs);
     const updatedSongs = filteredSongs.map(song => {
       // console.log('song ::: ', song);
@@ -74,7 +74,7 @@ function SongList({ currentSong, userFavorites, playList }) {
       }
     });
     // console.log('updatedSongs ::: ', updatedSongs);
-    console.log('songFavId ::: ', songFavId);
+    // console.log('songFavId ::: ', songFavId);
     setFilteredSongs(updatedSongs);
   };
 
@@ -99,7 +99,7 @@ function SongList({ currentSong, userFavorites, playList }) {
 
       <ul className="max-h-[calc(100vh - 280px)] overflow-y-auto mt-4">
         {songs.map(song => {
-          console.log('song :: ', song);
+          // console.log('song :: ', song);
           return (
             <li key={song.id} className="flex justify-between items-center">
               <a
