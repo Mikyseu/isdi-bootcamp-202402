@@ -30,4 +30,5 @@ describe('updateUserAvatar', () => {
     after(async () => {
         await mongoose.disconnect();
     });
+
 });

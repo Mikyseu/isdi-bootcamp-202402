@@ -19,6 +19,7 @@ function SongList({ currentSong, userFavorites, playList }) {
             image: `https://cdn1.suno.ai/image_${song.sunoId}.png`,
           }));
           setSongs(formattedSongs);
+          setFilteredSongs(formattedSongs);
           playList(formattedSongs);
         })
         .catch(error => console.log(error));
@@ -60,8 +61,9 @@ function SongList({ currentSong, userFavorites, playList }) {
   const handleFav = id => {
     setSongFavId(id);
     setRunEffect(!runEffect);
-
+    console.log('filteredSongs ::: ', filteredSongs);
     const updatedSongs = filteredSongs.map(song => {
+      console.log('song ::: ', song);
       if (song.id === id) {
         setFavSongs(!song.favorite);
 
@@ -70,10 +72,11 @@ function SongList({ currentSong, userFavorites, playList }) {
         return song;
       }
     });
+    console.log('updatedSongs ::: ', updatedSongs);
     setFilteredSongs(updatedSongs);
   };
 
-  console.log(songFavId);
+  // console.log(songFavId);
 
   return (
     <div className="max-w-screen-lg mx-auto px-4 md:px-0">
