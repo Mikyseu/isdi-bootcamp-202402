@@ -5,8 +5,6 @@ import { useParams } from 'react-router-dom';
 
 function Header({ onUserLoggedOut, stamp }) {
   const params = useParams();
-  console.log(params);
-
   const [user, setUser] = useState(null);
 
   const handleLogoutClick = () => {
@@ -29,7 +27,7 @@ function Header({ onUserLoggedOut, stamp }) {
       console.log(error);
     }
   }, [stamp]);
-  console.log(params.username);
+
   return (
     <header className="flex items-center bg-[#1B1F47] p-2 ">
       <Link to={`/profile`}>

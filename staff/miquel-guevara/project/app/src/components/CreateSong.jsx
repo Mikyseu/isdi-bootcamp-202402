@@ -1,8 +1,7 @@
 import React from 'react';
 import logic from '../logic';
-import { Link } from 'react-router-dom';
 
-function CreateSongComponent({ onCancelClick }) {
+function CreateSong({ onCancelClick }) {
   const handleCreateSongClick = event => {
     event.preventDefault();
 
@@ -59,4 +58,4 @@ function CreateSongComponent({ onCancelClick }) {
   );
 }
 
-export default CreateSongComponent;
+export default CreateSong;

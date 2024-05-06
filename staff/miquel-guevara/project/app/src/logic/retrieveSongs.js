@@ -6,10 +6,12 @@ async function retrieveSongs(userFavorites) {
     if (userFavorites) {
         const userFavoritesList = await getUserFavorites()
 
+        console.log(userFavoritesList)
+
         const mapFavorites = userFavoritesList.map(song => {
             return { ...song, favorite: true }
         })
-        return mapFavorites
+        return userFavoritesList
     }
 
     return getAllSongs()
@@ -43,12 +45,12 @@ const getAllSongs = () => {
             if (res.status === 200) {
                 const songList = await res.json()
                 const userFavorites = await getUserFavorites()
-                console.log(userFavorites)
+
                 const consolidateList = songList.map(song => {
                     const songFound = userFavorites.find(element =>
                         element.sunoId === song.sunoId
                     )
-                    console.log(songFound)
+
                     if (songFound) {
                         return { ...song, favorite: true }
                     }

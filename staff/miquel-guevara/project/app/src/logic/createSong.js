@@ -3,7 +3,7 @@ import { validate, errors } from 'com'
 function createSong(song) {
     validate.token(sessionStorage.token)
     const json = JSON.stringify(song);
-    console.log(json)
+
     return fetch(`${import.meta.env.VITE_API_URL}/songs`, {
         method: 'POST',
         headers: {

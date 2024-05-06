@@ -17,9 +17,17 @@ function retrieveSongs(userId: string): Promise<any[]> {
             if (!user) throw new NotFoundError('user not found');
 
             return Song.find().lean()
-                .catch(error => { throw new SystemError(error.message) });
-        });
+                .then(songs => {
+                    return songs.map<{ id: string, title: string, sunoId: string, user: string }>(({ _id, title, sunoId, user }) => ({
+                        id: _id.toString(),
+                        title,
+                        sunoId,
+                        user: user.toString()
 
-}
+                    }))
+                })
+        })
+        .catch(error => { throw new SystemError(error.message) });
+};
 
 export default retrieveSongs;

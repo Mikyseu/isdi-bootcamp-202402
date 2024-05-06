@@ -81,13 +81,13 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
             </button>
           </form>
         </div>
-        <div class="fixed bottom-8 items-center">
-          <p class="font-bold text-white">
+        <div className="fixed bottom-8 items-center">
+          <p className="font-bold text-white">
             New user?
             <a
               href=""
               onClick={handleRegisterClick}
-              class="text-[#F7C815] mt-2"
+              className="text-[#F7C815] mt-2"
             >
               {' '}
               Sign up

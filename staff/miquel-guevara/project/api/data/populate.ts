@@ -29,12 +29,6 @@ mongoose.connect('mongodb://localhost:27017/baffle')
             Song.create({ user: user._id, title: 'prog avant-garde jazz', sunoId: 'e5f63e6b-3e3e-492d-b515-615962da15fa' }),
             Song.create({ user: user._id, title: 'dark goa trance', sunoId: '94ef9440-4757-4ed6-8595-59f6c5b8adf8' }),
             Song.create({ user: user._id, title: 'dreamy swing', sunoId: 'd23550cc-fcf6-4868-8204-6f9616e09fd7' }),
-            Song.create({ user: user._id, title: 'garage tango', sunoId: 'e8d3fbb6-c427-47dc-9710-07b239504551' }),
-            Song.create({ user: user._id, title: 'grunge cumbia', sunoId: '9ad57e9d-fdc3-4b2a-a5db-6eced4889deb' }),
-            Song.create({ user: user._id, title: 'shoegaze psybient', sunoId: '5a35c08a-578d-4b63-b836-626348d8b1bc' }),
-            Song.create({ user: user._id, title: 'acoustic chicago blues algorave', sunoId: '017b7138-880c-4179-8504-2b8231e43ef8' }),
-            Song.create({ user: user._id, title: 'afro-funk', sunoId: '5eb780c9-646e-4c48-83d8-033a8a4c10c6' }),
-            Song.create({ user: user._id, title: 'ambient dub techno', sunoId: '877003d6-9daf-44d5-b8aa-8ca528ed4044' }),
         ])
 
     )

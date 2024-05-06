@@ -15,6 +15,16 @@ function retrieveFavSongs(userId) {
             })
 
             const songFavList = await Promise.all(promises)
+                .then(songFavList => {
+                    return songFavList.map<{ id: string, title: string, sunoId: string, user: string }>(({ _id, title, sunoId, user }) => ({
+                        id: _id.toString(),
+                        title,
+                        sunoId,
+                        user: user.toString()
+
+                    }))
+                })
+
             return songFavList
         })
 }

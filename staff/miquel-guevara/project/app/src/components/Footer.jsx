@@ -1,12 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-function Footer({
-  song,
-  onPreviousSong,
-  onNextSong,
-  onSongComplete,
-  playList,
-}) {
+function Footer({ song, onSongComplete, playList }) {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);

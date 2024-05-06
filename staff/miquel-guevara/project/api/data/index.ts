@@ -51,7 +51,7 @@ const user = new Schema({
 type SongType = {
     user: ObjectId
     title: string
-    songId: string
+    sunoId: string
 }
 
 const song = new Schema({

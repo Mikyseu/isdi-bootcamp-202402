@@ -8,6 +8,7 @@ import colors from 'colors'
 import jwt from 'jsonwebtoken'
 import cors from 'cors'
 import updateUserAvatar from './logic/updateUserAvatar.ts'
+import { error } from 'console'
 
 dotenv.config()
 
@@ -191,8 +192,6 @@ mongoose.connect(MONGODB_URL)
 
         api.post('/songs', jsonBodyParser, (req, res) => {
             try {
-
-
                 const { authorization } = req.headers
 
                 const token = authorization.slice(7)
@@ -231,20 +230,26 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        api.get('/favorites', async (req, res) => {
+        api.get('/favorites', (req, res) => {
             try {
                 const { authorization } = req.headers
                 const token = authorization.slice(7)
-
                 const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
+                logic.retrieveFavSongs(userId)
 
-                const songList = await logic.retrieveFavSongs(userId)
-                // controlar tot aixo
+                    .then(favSongs => res.status(200).json(favSongs))
+                    .catch(error => {
+                        if (error instanceof SystemError) {
+                            logger.error(error.message)
 
-                res.status(200).json(songList)
+                            res.status(500).json({ error: error.constructor.name, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.warn(error.message)
 
-
+                            res.status(404).json({ error: error.constructor.name, message: error.message })
+                        }
+                    })
 
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ContentError) {
@@ -276,9 +281,6 @@ mongoose.connect(MONGODB_URL)
 
                 res.status(200).json(logic.addFavSong(songId, userId))
 
-
-
-
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ContentError) {
                     logger.warn(error.message)
@@ -308,10 +310,20 @@ mongoose.connect(MONGODB_URL)
 
                 const { songId } = req.params
 
-                res.status(200).json(logic.removeFavSong(songId, userId))
+                logic.removeFavSong(songId, userId)
 
+                    .then(() => res.status(200).send())
+                    .catch(error => {
+                        if (error instanceof SystemError) {
+                            logger.error(error.message)
 
+                            res.status(500).json({ error: error.constructor.name, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.warn(error.message)
 
+                            res.status(404).json({ error: error.constructor.name, message: error.message })
+                        }
+                    })
 
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ContentError) {

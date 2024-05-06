@@ -24,21 +24,50 @@ describe('createSong', () => {
     it('creates song with sunoId from existing user', () =>
         User.deleteMany()
             .then(() =>
-                Song.deleteMany())
+                Song.deleteMany()
+                    .then(() =>
+                        User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Miky', password: '123qwe123', avatar: ' ' })
+                            .then(user =>
+                                logic.createSong(user.id, 'Echoes of Hanbok', '4b61aaa2-fb64-4cb2-ab03-4c02ecbad8bb')
+                                    .then(() =>
+                                        Song.find({})
+                                            .then((song) => {
+                                                const theSong = song[0]
+                                                expect(theSong.title).to.equal('Echoes of Hanbok')
+                                                expect(theSong.sunoId).to.equal('4b61aaa2-fb64-4cb2-ab03-4c02ecbad8bb')
+                                            })
+                                    )
+
+
+                            )
+
+                    ))
+    )
+
+    it('fails on non existing user', () =>
+        User.deleteMany()
+            .then(() => logic.createSong(new ObjectId().toString(), 'Echoes of Hanbok', '4b61aaa2-fb64-4cb2-ab03-4c02ecbad8bb'))
+            .catch(error => {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal('user not found')
+            })
+
+    )
+
+    it('fails on non existing song', () =>
+        User.deleteMany()
             .then(() =>
                 User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Miky', password: '123qwe123', avatar: ' ' })
                     .then(user =>
-                        logic.createSong(user.id, 'Echoes of Hanbok', '4b61aaa2-fb64-4cb2-ab03-4c02ecbad8bb')
-                            .then((song) => {
-
-                                expect(song.title).to.equal('Echoes of Hanbok')
-                                expect(song.sunoId).to.equal('4b61aaa2-fb64-4cb2-ab03-4c02ecbad8bb')
+                        logic.createSong(user.id, 'Echoes of Hanbok', new ObjectId().toString())
+                            .catch(error => {
+                                expect(error).to.be.instanceOf(NotFoundError)
+                                expect(error.message).to.equal('song not found')
                             })
-                    )
-
-            )
+                    ))
     )
 
+    after(() => mongoose.disconnect());
 })
 
 

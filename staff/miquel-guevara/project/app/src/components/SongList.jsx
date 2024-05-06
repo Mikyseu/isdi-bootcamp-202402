@@ -4,8 +4,8 @@ import logic from '../logic';
 function SongList({ currentSong, userFavorites, playList }) {
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
-  const [addFav, setAddFav] = useState(null);
-  const [songFavId, setSongFavId] = useState('');
+  const [favSongs, setFavSongs] = useState(null);
+  const [songFavId, setSongFavId] = useState(null);
   const [runEffect, setRunEffect] = useState(false);
 
   useEffect(() => {
@@ -13,16 +13,12 @@ function SongList({ currentSong, userFavorites, playList }) {
       logic
         .retrieveSongs(userFavorites)
         .then(allSongs => {
-          console.log(allSongs);
           const formattedSongs = allSongs.map(song => ({
-            id: song._id,
-            title: song.title,
+            ...song,
             song: `https://cdn1.suno.ai/${song.sunoId}.mp3`,
             image: `https://cdn1.suno.ai/image_${song.sunoId}.png`,
-            favorite: song.favorite,
           }));
           setSongs(formattedSongs);
-          setFilteredSongs(formattedSongs);
           playList(formattedSongs);
         })
         .catch(error => console.log(error));
@@ -34,7 +30,7 @@ function SongList({ currentSong, userFavorites, playList }) {
   //mirar el fallo
   useEffect(() => {
     try {
-      if (addFav) {
+      if (favSongs) {
         logic.addFavorite(songFavId);
       } else {
         logic.removeFavorite(songFavId);
@@ -67,7 +63,7 @@ function SongList({ currentSong, userFavorites, playList }) {
 
     const updatedSongs = filteredSongs.map(song => {
       if (song.id === id) {
-        setAddFav(!song.favorite);
+        setFavSongs(!song.favorite);
 
         return { ...song, favorite: !song.favorite };
       } else {
@@ -76,6 +72,8 @@ function SongList({ currentSong, userFavorites, playList }) {
     });
     setFilteredSongs(updatedSongs);
   };
+
+  console.log(songFavId);
 
   return (
     <div className="max-w-screen-lg mx-auto px-4 md:px-0">
@@ -95,7 +93,7 @@ function SongList({ currentSong, userFavorites, playList }) {
       </div>
 
       <ul className="max-h-[calc(100vh - 280px)] overflow-y-auto mt-4">
-        {filteredSongs.map(song => (
+        {songs.map(song => (
           <li key={song.id} className="flex justify-between items-center">
             <a
               href="#"
