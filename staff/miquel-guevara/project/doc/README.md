@@ -1,4 +1,4 @@
-# BAFFLE 
+# BAFFLE
 
 ## Intro
 
@@ -10,14 +10,15 @@ This application will gather the songs and their names from the website https://
 
 ### Use Cases
 
-- find songs 
+- find songs
 - choose a song
 - play the song
 - toggle favorite song
-- edit profile(profile picture)
+- add song
 
 v0.1
-- add song
+
+- edit profile(profile picture)
 
 ### UI Design
 
@@ -47,18 +48,17 @@ v0.1
 ### Data Model
 
 User
+
 - id (required)
 - name (string, required)
 - email (string, required)
 - username (string, required)
 - password (string, required)
 - avatar (string, optional)
-- favs ([Song.id])
-
+- favs (Array <String>)
 
 Song
+
 - id (required)
 - code (string, required)
 - title (string, required)
-
- 

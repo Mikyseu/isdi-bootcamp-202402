@@ -88,18 +88,18 @@ function Profile({ currentSong, playList }) {
         </button>
       </div>
 
+      <SongList
+        userFavorites={true}
+        currentSong={currentSong}
+        playList={playList}
+      />
+
       {view === 'create-song' && (
         <CreateSong
           onCancelClick={handleCancelCreateSongClick}
           onSongCreated={handleSongCreated}
         />
       )}
-
-      <SongList
-        userFavorites={true}
-        currentSong={currentSong}
-        playList={playList}
-      />
     </section>
   );
 }
