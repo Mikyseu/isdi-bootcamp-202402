@@ -11,7 +11,7 @@ async function retrieveSongs(userFavorites) {
         const mapFavorites = userFavoritesList.map(song => {
             return { ...song, favorite: true }
         })
-        return userFavoritesList
+        return mapFavorites
     }
 
     return getAllSongs()

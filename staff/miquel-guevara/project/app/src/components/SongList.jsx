@@ -8,6 +8,7 @@ function SongList({ currentSong, userFavorites, playList }) {
   const [songFavId, setSongFavId] = useState(null);
   const [runEffect, setRunEffect] = useState(false);
 
+  console.log('userFavorites: ', userFavorites);
   useEffect(() => {
     try {
       logic
@@ -26,7 +27,7 @@ function SongList({ currentSong, userFavorites, playList }) {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [favSongs]);
 
   //mirar el fallo
   useEffect(() => {
@@ -61,9 +62,9 @@ function SongList({ currentSong, userFavorites, playList }) {
   const handleFav = id => {
     setSongFavId(id);
     setRunEffect(!runEffect);
-    console.log('filteredSongs ::: ', filteredSongs);
+    // console.log('filteredSongs ::: ', filteredSongs);
     const updatedSongs = filteredSongs.map(song => {
-      console.log('song ::: ', song);
+      // console.log('song ::: ', song);
       if (song.id === id) {
         setFavSongs(!song.favorite);
 
@@ -72,7 +73,8 @@ function SongList({ currentSong, userFavorites, playList }) {
         return song;
       }
     });
-    console.log('updatedSongs ::: ', updatedSongs);
+    // console.log('updatedSongs ::: ', updatedSongs);
+    console.log('songFavId ::: ', songFavId);
     setFilteredSongs(updatedSongs);
   };
 
@@ -96,28 +98,31 @@ function SongList({ currentSong, userFavorites, playList }) {
       </div>
 
       <ul className="max-h-[calc(100vh - 280px)] overflow-y-auto mt-4">
-        {songs.map(song => (
-          <li key={song.id} className="flex justify-between items-center">
-            <a
-              href="#"
-              onClick={() => handleSelectedSong(song)}
-              className="text-white font-semibold"
-            >
-              {song.title}
-            </a>
-            <button onClick={() => handleFav(song.id)}>
-              <img
-                src={
-                  song.favorite
-                    ? '../public/heart.png'
-                    : '../public/heart-empty.png'
-                }
-                alt="fav"
-                className="w-5 h-5"
-              />
-            </button>
-          </li>
-        ))}
+        {songs.map(song => {
+          console.log('song :: ', song);
+          return (
+            <li key={song.id} className="flex justify-between items-center">
+              <a
+                href="#"
+                onClick={() => handleSelectedSong(song)}
+                className="text-white font-semibold"
+              >
+                {song.title}
+              </a>
+              <button onClick={() => handleFav(song.id)}>
+                <img
+                  src={
+                    song.favorite
+                      ? '../public/heart.png'
+                      : '../public/heart-empty.png'
+                  }
+                  alt="fav"
+                  className="w-5 h-5"
+                />
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
