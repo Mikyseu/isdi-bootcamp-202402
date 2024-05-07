@@ -8,7 +8,7 @@ function Profile({ currentSong }) {
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
-  const [songsList, setSongsList] = useState([]); // Asumimos que tienes un arreglo de canciones aquí
+  const [songsList, setSongsList] = useState([]);
 
   useEffect(() => {
     async function fetchUserData() {
@@ -92,7 +92,7 @@ function Profile({ currentSong }) {
       <SongList
         userFavorites={true}
         currentSong={currentSong}
-        songsList={songsList} // Cambio: Pasamos un arreglo de canciones
+        songsList={songsList}
       />
 
       {view === 'create-song' && (

@@ -1,13 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 function Footer({ song, onSongComplete, songsList }) {
+  console.log({ song, onSongComplete, songsList });
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [songToPlay, setSongToPlay] = useState(song);
-
-  //TODO mirar de que es reprodueixi al tocar canço i el boto PLAYLIST
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -38,11 +37,17 @@ function Footer({ song, onSongComplete, songsList }) {
   }, [audioRef.current, onSongComplete]);
 
   useEffect(() => {
+    console.log('SongToPLay1:', songToPlay);
+    console.log('song:', song);
+    if (song) {
+      setSongToPlay(song);
+    }
     if (songToPlay) {
       audioRef.current.load();
+
       setPlaying(true);
     }
-  }, [songToPlay]);
+  }, [song]);
 
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
@@ -50,6 +55,7 @@ function Footer({ song, onSongComplete, songsList }) {
 
   const handlePlay = () => {
     const audio = audioRef.current;
+    console.log('AudioRef:', audioRef.current);
     if (audio.paused) {
       audio.play();
       setPlaying(true);
@@ -63,8 +69,11 @@ function Footer({ song, onSongComplete, songsList }) {
     audioRef.current.currentTime += 10;
   };
 
-  const handleNextSong = () => {
+  const handleNextSong = songToPlay => {
+    console.log('SongToPLay:', songToPlay);
     const songIndex = songsList.indexOf(songToPlay);
+
+    console.log('SongIndex:', songIndex);
     if (songIndex >= 0 && songIndex < songsList.length - 1) {
       setSongToPlay(songsList[songIndex + 1]);
     }
@@ -76,6 +85,8 @@ function Footer({ song, onSongComplete, songsList }) {
       setSongToPlay(songsList[songIndex - 1]);
     }
   };
+  console.log('songToPlay:', songToPlay);
+  console.log('playing:', playing);
 
   return (
     <div className="fixed bottom-0 w-full h-[140px] flex justify-center items-center p-4 box-border bg-[#1B1F47] ">
@@ -134,7 +145,7 @@ function Footer({ song, onSongComplete, songsList }) {
               className="w-4 h-4"
             />
           </button>
-          <button onClick={handleNextSong}>
+          <button onClick={() => handleNextSong(song)}>
             <img src="../public/next.png" alt="next" className="w-4 h-4" />
           </button>
         </div>
