@@ -10,16 +10,18 @@ function removeFavorite(songId) {
         }
     })
         .then(res => {
-            if (res.status === 200) return res.json()
+            if (res.status === 200) {
 
-            return res.json()
-                .then(body => {
-                    const { error, message } = body
+                return;
+            } else {
 
-                    const constructor = errors[error]
-
-                    throw new constructor(message)
-                })
+                return res.json()
+                    .then(body => {
+                        const { error, message } = body
+                        const constructor = errors[error]
+                        throw new constructor(message)
+                    })
+            }
         })
 }
 

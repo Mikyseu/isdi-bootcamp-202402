@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 
-function SongList({ currentSong, userFavorites, playList }) {
+function SongList({ currentSong, userFavorites, songsList }) {
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
-  const [favSongs, setFavSongs] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [favSongs, setFavSongs] = useState([]);
   const [songFavId, setSongFavId] = useState(null);
   const [favBoolean, setFavBoolean] = useState(false);
 
-  // console.log('userFavorites: ', userFavorites);
   useEffect(() => {
     try {
       logic
@@ -21,18 +21,16 @@ function SongList({ currentSong, userFavorites, playList }) {
           }));
           setSongs(formattedSongs);
           setFilteredSongs(formattedSongs);
-          playList(formattedSongs);
         })
         .catch(error => console.log(error));
     } catch (error) {
       console.log(error);
     }
-  }, [favSongs]);
+  }, [userFavorites]);
 
-  //mirar el fallo
   useEffect(() => {
     try {
-      if (favSongs) {
+      if (favBoolean) {
         logic.addFavorite(songFavId);
       } else {
         logic.removeFavorite(songFavId);
@@ -40,15 +38,16 @@ function SongList({ currentSong, userFavorites, playList }) {
     } catch (error) {
       console.log(error);
     }
-  }, [favBoolean]);
+  }, [favBoolean, songFavId]);
 
   const handleSelectedSong = song => {
     currentSong(song);
   };
 
-  const handleSearch = searchTerm => {
+  const handleSearch = term => {
+    setSearchTerm(term);
     const filtered = songs.filter(song =>
-      song.title.toLowerCase().includes(searchTerm.toLowerCase()),
+      song.title.toLowerCase().includes(term.toLowerCase()),
     );
     setFilteredSongs(filtered);
   };
@@ -60,25 +59,24 @@ function SongList({ currentSong, userFavorites, playList }) {
   };
 
   const handleFav = id => {
+    const isFavorite = !songs.find(song => song.id === id).favorite;
     setSongFavId(id);
-    setFavBoolean(!favBoolean);
-    // console.log('filteredSongs ::: ', filteredSongs);
-    const updatedSongs = filteredSongs.map(song => {
-      // console.log('song ::: ', song);
+    setFavBoolean(isFavorite);
+    const updatedSongs = songs.map(song => {
       if (song.id === id) {
-        setFavSongs(!song.favorite);
-
-        return { ...song, favorite: !song.favorite };
+        return { ...song, favorite: isFavorite };
       } else {
         return song;
       }
     });
-    // console.log('updatedSongs ::: ', updatedSongs);
-    // console.log('songFavId ::: ', songFavId);
-    setFilteredSongs(updatedSongs);
+    setSongs(updatedSongs);
+    setFavSongs(updatedSongs.filter(song => song.favorite));
+    setFilteredSongs(
+      updatedSongs.filter(song =>
+        song.title.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    );
   };
-
-  // console.log(songFavId);
 
   return (
     <div className="max-w-screen-lg mx-auto px-4 md:px-0">
@@ -98,13 +96,15 @@ function SongList({ currentSong, userFavorites, playList }) {
       </div>
 
       <ul className="max-h-[calc(100vh - 280px)] overflow-y-auto mt-4">
-        {songs.map(song => {
-          // console.log('song :: ', song);
+        {filteredSongs.map(song => {
           return (
             <li key={song.id} className="flex justify-between items-center">
               <a
                 href="#"
-                onClick={() => handleSelectedSong(song)}
+                onClick={e => {
+                  e.preventDefault();
+                  handleSelectedSong(song);
+                }}
                 className="text-white font-semibold"
               >
                 {song.title}

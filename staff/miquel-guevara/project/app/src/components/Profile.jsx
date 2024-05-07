@@ -4,10 +4,11 @@ import CreateSong from '../components/CreateSong';
 import logic from '../logic';
 import SongList from './SongList';
 
-function Profile({ currentSong, playList }) {
+function Profile({ currentSong }) {
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
+  const [songsList, setSongsList] = useState([]); // Asumimos que tienes un arreglo de canciones aquí
 
   useEffect(() => {
     async function fetchUserData() {
@@ -91,7 +92,7 @@ function Profile({ currentSong, playList }) {
       <SongList
         userFavorites={true}
         currentSong={currentSong}
-        playList={playList}
+        songsList={songsList} // Cambio: Pasamos un arreglo de canciones
       />
 
       {view === 'create-song' && (

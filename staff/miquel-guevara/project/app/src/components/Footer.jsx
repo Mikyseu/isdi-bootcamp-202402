@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-function Footer({ song, onSongComplete, playList }) {
+function Footer({ song, onSongComplete, songsList }) {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -64,15 +64,17 @@ function Footer({ song, onSongComplete, playList }) {
   };
 
   const handleNextSong = () => {
-    //TODO: Aixo falla a la ultima
-    const songIndex = playList.indexOf(songToPlay);
-    setSongToPlay(playList[songIndex + 1]);
+    const songIndex = songsList.indexOf(songToPlay);
+    if (songIndex >= 0 && songIndex < songsList.length - 1) {
+      setSongToPlay(songsList[songIndex + 1]);
+    }
   };
 
   const handlePreviousSong = () => {
-    //TODO: Això falla a la primera
-    const songIndex = playList.indexOf(songToPlay);
-    setSongToPlay(playList[songIndex - 1]);
+    const songIndex = songsList.indexOf(songToPlay);
+    if (songIndex > 0) {
+      setSongToPlay(songsList[songIndex - 1]);
+    }
   };
 
   return (
