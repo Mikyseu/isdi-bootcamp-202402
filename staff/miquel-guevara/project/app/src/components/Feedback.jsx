@@ -6,10 +6,10 @@ function Feedback({ message, level, onAcceptClick }) {
 
   return (
     <div
-      className={`h-screen w-screen fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40`}
+      className={`h-screen w-screen fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40 `}
     >
       <div
-        className={`p-4 rounded-lg shadow-lg flex flex-col ${
+        className={`p-4 rounded-lg shadow-lg flex flex-col animate-jump-in animate-once animate-duration-[1200ms] ${
           level === 'error'
             ? 'bg-red-500'
             : level === 'warn'
