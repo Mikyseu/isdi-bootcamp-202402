@@ -31,7 +31,7 @@ function Header({ onUserLoggedOut, stamp }) {
   }, [stamp]);
 
   return (
-    <header className="flex items-center bg-[#1B1F47] p-2 ">
+    <header className="fixed top-0 w-full h-[80px] z-10 flex items-center bg-[#1B1F47] p-2 ">
       <Link to={`/profile`}>
         {user && user.avatar ? (
           <img

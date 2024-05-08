@@ -201,7 +201,7 @@ mongoose.connect(MONGODB_URL)
                 const { title, sunoId } = req.body
 
                 logic.createSong(userId as string, title, sunoId)
-                    .then(() => res.status(201).send())
+                    .then(() => res.status(201).json({ message: "song created" }))
                     .catch(error => {
                         if (error instanceof SystemError) {
                             logger.error(error.message)

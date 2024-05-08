@@ -47,8 +47,8 @@ function Profile({ currentSong }) {
   };
 
   return (
-    <section className="h-screen bg-[#6E8BB3] flex flex-col justify-start mt-4 mx-4">
-      <div className="flex justify-between items-start">
+    <section className="h-full bg-[#6E8BB3] flex flex-col justify-start mt-4 mx-4">
+      <div className="sticky top-[80px] z-20 flex justify-between items-start bg-[#6E8BB3] p-4">
         <Link to="/">
           <img src="../../public/home.png" alt="home" className="w-8 h-8" />
         </Link>

@@ -74,7 +74,7 @@ function Login({ onUserLoggedIn, onRegisterClick }) {
             </div>
 
             <button
-              className="bg-[#4C5D8B] hover:bg-[#6B99C3] text-white font-bold py-2 px-4 rounded mt-4 w-full"
+              className="bg-[#4C5D8B] hover:bg-[#6B99C3] animate-jump animate-once text-white font-bold py-2 px-4 rounded mt-4 w-full"
               type="submit"
             >
               Login

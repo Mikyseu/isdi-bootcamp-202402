@@ -82,8 +82,8 @@ function SongList({ currentSong, userFavorites, songsList }) {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto px-4 md:px-0">
-      <div className="relative flex items-center">
+    <div className="pt-[80px] pb-[140px] max-w-screen-lg mx-auto px-4 md:px-0">
+      <div className="sticky top-[80px] z-10  flex items-center">
         <input
           type="text"
           placeholder="Search song..."
@@ -98,7 +98,7 @@ function SongList({ currentSong, userFavorites, songsList }) {
         </button>
       </div>
 
-      <ul className="max-h-[calc(100vh - 280px)] overflow-y-auto mt-4">
+      <ul className="sticky top-[240px] mb-[140px] overflow-y-auto mt-4">
         {filteredSongs.map(song => {
           return (
             <li key={song.id} className="flex justify-between items-center">
