@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import logic from '../logic';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { useContext } from '../context.js';
 
 function Header({ onUserLoggedOut, stamp }) {
   const params = useParams();
   const [user, setUser] = useState(null);
+  const { showFeedback } = useContext();
 
   const handleLogoutClick = () => {
     try {
@@ -22,9 +24,9 @@ function Header({ onUserLoggedOut, stamp }) {
       logic
         .retrieveUser()
         .then(setUser)
-        .catch(error => console.log(error));
+        .catch(error => showFeedback(error));
     } catch (error) {
-      console.log(error);
+      showFeedback(error);
     }
   }, [stamp]);
 

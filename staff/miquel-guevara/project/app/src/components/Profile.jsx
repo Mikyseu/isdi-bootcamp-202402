@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import CreateSong from '../components/CreateSong';
 import logic from '../logic';
 import SongList from './SongList';
+import { useContext } from '../context.js';
 
 function Profile({ currentSong }) {
+  const { showFeedback } = useContext();
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
@@ -32,7 +34,7 @@ function Profile({ currentSong }) {
       const updatedUserData = await logic.retrieveUser();
       setUser(updatedUserData);
     } catch (error) {
-      console.error(error);
+      showFeedback(error);
     }
   };
 

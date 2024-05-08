@@ -2,7 +2,7 @@ import { logger } from '../utils';
 
 import logic from '../logic';
 
-import { useContext } from '../context';
+import { useContext } from '../context.js';
 
 function Login({ onUserLoggedIn, onRegisterClick }) {
   const { showFeedback } = useContext();

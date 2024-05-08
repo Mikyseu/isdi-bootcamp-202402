@@ -1,10 +1,12 @@
 import React from 'react';
 import logic from '../logic';
+import { useContext } from '../context.js';
 
 function CreateSong({ onCancelClick }) {
   const handleCreateSongClick = event => {
     event.preventDefault();
 
+    const { showFeedback } = useContext();
     const form = event.target;
     const title = form.title.value;
     const sunoId = form.sunoId.value;
@@ -14,7 +16,7 @@ function CreateSong({ onCancelClick }) {
         form.reset();
       });
     } catch (error) {
-      alert(error.message);
+      showFeedback(error);
     }
   };
 

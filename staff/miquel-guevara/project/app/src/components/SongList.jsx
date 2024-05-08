@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import logic from '../logic';
+import { useContext } from '../context.js';
 
 function SongList({ currentSong, userFavorites, songsList }) {
+  const { showFeedback } = useContext();
+
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,9 +25,9 @@ function SongList({ currentSong, userFavorites, songsList }) {
           setSongs(formattedSongs);
           setFilteredSongs(formattedSongs);
         })
-        .catch(error => console.log(error));
+        .catch(error => showFeedback(error));
     } catch (error) {
-      console.log(error);
+      showFeedback(error);
     }
   }, [userFavorites]);
 
@@ -36,7 +39,7 @@ function SongList({ currentSong, userFavorites, songsList }) {
         logic.removeFavorite(songFavId);
       }
     } catch (error) {
-      console.log(error);
+      showFeedback(error);
     }
   }, [favBoolean, songFavId]);
 

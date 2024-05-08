@@ -7,6 +7,8 @@ import CreateSong from './components/CreateSong';
 import Profile from './components/Profile';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Feedback from './components/Feedback';
+import Confirm from './components/Confirm';
 import { Context } from './context';
 import { errors } from 'com';
 
@@ -99,7 +101,7 @@ function App() {
         </Routes>
       </Context.Provider>
 
-      {/* {feedback && (
+      {feedback && (
         <Feedback
           message={feedback.message}
           level={feedback.level}
@@ -113,7 +115,7 @@ function App() {
           onCancelClick={handleConfirmCancelClick}
           onAcceptClick={handleConfirmAcceptClick}
         />
-      )} */}
+      )}
     </>
   );
 }

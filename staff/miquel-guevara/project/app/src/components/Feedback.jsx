@@ -6,16 +6,22 @@ function Feedback({ message, level, onAcceptClick }) {
 
   return (
     <div
-      className={`fixed top-0 w-full border-2 border-black ${
-        level === 'error'
-          ? 'bg-red-500'
-          : level === 'warn'
-          ? 'bg-yellow-500'
-          : 'bg-green-500'
-      } flex flex-col items-center`}
+      className={`h-screen w-screen fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40`}
     >
-      <h3>{message}</h3>
-      <RoundButton onClick={onAcceptClick}>Accept</RoundButton>
+      <div
+        className={`p-4 rounded-lg shadow-lg flex flex-col ${
+          level === 'error'
+            ? 'bg-red-500'
+            : level === 'warn'
+            ? 'bg-yellow-500'
+            : 'bg-green-500'
+        }`}
+      >
+        <h3>{message}</h3>
+        <RoundButton onClick={onAcceptClick} className="bg-white ">
+          Accept
+        </RoundButton>
+      </div>
     </div>
   );
 }
