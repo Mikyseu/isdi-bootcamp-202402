@@ -1,45 +1,80 @@
 // @ts-nocheck
 import dotenv from 'dotenv';
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Types;
 import { User, Song } from '../data/index.ts';
 import logic from './index.ts';
 import { expect } from 'chai';
 import { errors } from 'com';
 
+
 dotenv.config();
 
-const { DuplicityError, CredentialsError, NotFoundError } = errors;
+const { NotFoundError } = errors;
 
 describe('retrieveFavSongs', () => {
-    before(() => mongoose.connect(process.env.MONGODB_TEST_URL));
+    before(() => mongoose.connect(process.env.MONGODB_TEST_URL))
 
-    it('succeeds on existing user and correct credentials', async () => {
-        await User.deleteMany();
+    it('retrieves favorite songs by a specific user', () =>
+        Promise.all([
+            User.deleteMany({}),
+            Song.deleteMany({})
+        ])
+            .then(() => User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Miky', password: '123qwe123' }))
+            .then(user =>
+                Song.create({ user: new ObjectId(), title: 'title', sunoId: 'string' }))
 
-        const user = await User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Mikyseu', password: '123qwe123' });
-        const songs = await logic.retrieveFavSongs(user.id);
+            .then(song =>
+                User.create({ name: 'Pau', email: 'pau@gmail.com', username: 'Pau', password: '123qwe123', favorites: [song.id] }))
 
-        expect(songs).to.be.an('array');
-        if (songs.length > 0) {
-            expect(songs[0]).to.be.an('object');
-            expect(songs[0].id).to.be.a('string');
-        }
+            .then(user => {
+                logic.retrieveFavSongs(user.id)
+                    .then((songs) => {
+                        expect(songs).to.be.an('array')
+                        expect(songs.length).to.equal(1)
+                        expect(songs[0].title).to.equal('title')
+                        expect(songs[0].sunoId).to.equal('string')
+                        expect(songs[0].user.toString()).to.equal(user.id);
+                    })
+            })
+    )
+
+    it('retrieves favorite songs by a specific user', () => {
+        Promise.all([
+            User.deleteMany({}),
+            Song.deleteMany({})
+        ])
+            .then(() => User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Miky', password: '123qwe123' }))
+            .then(user => {
+                const song = Song.create({ user: user.id, title: 'title', sunoId: 'string' });
+                user.favorites.push(song.id);
+                return user.save();
+            })
+            .catch(error => {
+                expect(error).to.be.instanceOf(NotFoundError);
+                expect(error.message).to.equal('User not found');
+            })
     });
 
-    it('fails on non-existing user', async () => {
-        await User.deleteMany();
-
-        await User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Mikyseu', password: '123qwe123' });
-
-        try {
-            await logic.retrieveFavSongs(new ObjectId().toString());
-            throw new Error('should not reach this point');
-        } catch (error) {
-            expect(error).to.be.instanceOf(NotFoundError);
-            expect(error.message).to.equal('user not found');
-        }
+    it('retrieves favorite songs by a non-existing user', () => {
+        Promise.all([
+            User.deleteMany({}),
+            Song.deleteMany({})
+        ])
+            .then(() => User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Miky', password: '123qwe123' }))
+            .then(user => {
+                const song = Song.create({ user: user.id, title: 'title', sunoId: 'string' });
+                user.favorites.push(song._id);
+                return user.save();
+            })
+            .then(user => {
+                return logic.retrieveFavSongs('non-existing-user-id');
+            })
+            .catch(error => {
+                expect(error).to.be.instanceOf(NotFoundError);
+                expect(error.message).to.equal('User not found');
+            })
     });
-
 
     after(() => mongoose.disconnect());
 });

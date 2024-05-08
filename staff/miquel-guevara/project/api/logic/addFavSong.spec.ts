@@ -19,14 +19,14 @@ describe('addFavSong', () => {
     it('adds fav song', () =>
         User.deleteMany()
             .then(() => User.create({ name: 'Miky Seu', email: 'miky@seu.com', username: 'Mikyseu', password: '123qwe123' }))
-            .then(async user => {
-                const songCreate = await Song.create({ title: 'title', user: user.id, sunoId: 'string' })
+            .then(user => {
+                const songCreate = Song.create({ title: 'title', user: user.id, sunoId: 'string' })
 
                 return { songCreate, user }
             })
-            .then(async song => {
+            .then(song => {
 
-                await logic.addFavSong(song.songCreate.id, song.user.id)
+                logic.addFavSong(song.songCreate.id, song.user.id)
                 return song.user
             })
             .then(user => {

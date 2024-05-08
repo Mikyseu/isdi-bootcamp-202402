@@ -1,29 +1,18 @@
-
 import { NotFoundError, SystemError } from "../../com/errors.ts";
 import { User } from "../data/index.ts";
 
 function removeFavSong(songId, userId) {
-
     return User.findById(userId)
-        .catch(error => { throw new SystemError(error.message) })
         .then(user => {
-            //TODO arreglar caso de uso de que no exista la cancion(id) en favoritos
-            try {
-                if (!user.favorites.includes(songId)) {
-                    throw new NotFoundError('Song not found in favorites')
-                }
-
-                let index = user.favorites.indexOf(songId)
-                if (index > -1) {
-                    user.favorites.splice(index, 1)
-
-                    user.save()
-                }
-            } catch (error) {
-                throw new SystemError(error.message)
-            }
+            if (!user) throw new NotFoundError(`User with id ${userId} not found`);
+            const index = user.favorites.indexOf(songId);
+            if (index === -1) throw new Error(`Song with id ${songId} not found in favorites`);
+            user.favorites.splice(index, 1);
+            return user.save();
         })
-
+        .catch(error => {
+            throw new SystemError(error.message);
+        });
 }
 
-export default removeFavSong
+export default removeFavSong;
