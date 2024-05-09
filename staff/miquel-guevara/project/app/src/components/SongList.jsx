@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 import { useContext } from '../context.js';
 
-function SongList({ currentSong, userFavorites, songsList }) {
+function SongList({ currentSong, userFavorites }) {
   const { showFeedback } = useContext();
 
   const [songs, setSongs] = useState([]);
@@ -83,7 +83,7 @@ function SongList({ currentSong, userFavorites, songsList }) {
 
   return (
     <div className="pt-[80px] pb-[140px] max-w-screen-lg mx-auto px-4 md:px-0">
-      <div className="sticky top-[80px] z-10  flex items-center">
+      <div className="sticky top-[80px] z-10 flex items-center mb-4">
         <input
           type="text"
           placeholder="Search song..."

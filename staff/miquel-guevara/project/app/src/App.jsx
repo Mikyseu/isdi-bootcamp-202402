@@ -111,7 +111,7 @@ function App() {
 
       {confirm && (
         <Confirm
-          message="hola confirm"
+          message={confirm.message}
           onCancelClick={handleConfirmCancelClick}
           onAcceptClick={handleConfirmAcceptClick}
         />

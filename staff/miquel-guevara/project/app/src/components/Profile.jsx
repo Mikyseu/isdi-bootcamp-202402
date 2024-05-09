@@ -10,32 +10,34 @@ function Profile({ currentSong }) {
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(false);
-  const [songsList, setSongsList] = useState([]);
 
   useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const userData = await logic.retrieveUser();
+    logic
+      .retrieveUser()
+      .then(userData => {
         setUser(userData);
-      } catch (error) {
+      })
+      .catch(error => {
         alert(error);
-      }
-    }
-    fetchUserData();
-  }, []);
+      });
+  });
 
   const clearView = () => setView(null);
 
-  const handleAvatarChange = async event => {
+  const handleAvatarChange = event => {
     event.preventDefault();
     const avatar = event.target.avatarInput.value;
-    try {
-      await logic.updateUserAvatar(user.username, avatar);
-      const updatedUserData = await logic.retrieveUser();
-      setUser(updatedUserData);
-    } catch (error) {
-      showFeedback(error);
-    }
+    logic
+      .updateUserAvatar(user.username, avatar)
+      .then(() => {
+        return logic.retrieveUser();
+      })
+      .then(updatedUserData => {
+        setUser(updatedUserData);
+      })
+      .catch(error => {
+        showFeedback(error);
+      });
   };
 
   const handleCreateSongClick = () => setView('create-song');
@@ -48,7 +50,7 @@ function Profile({ currentSong }) {
 
   return (
     <section className="h-full bg-[#6E8BB3] flex flex-col justify-start mt-4 mx-4">
-      <div className="sticky top-[80px] z-20 flex justify-between items-start bg-[#6E8BB3] p-4">
+      <div className="sticky top-[80px] z-10 flex justify-between items-start p-4">
         <Link to="/">
           <img src="../../public/home.png" alt="home" className="w-8 h-8" />
         </Link>
@@ -91,11 +93,7 @@ function Profile({ currentSong }) {
         </button>
       </div>
 
-      <SongList
-        userFavorites={true}
-        currentSong={currentSong}
-        songsList={songsList}
-      />
+      <SongList userFavorites={true} currentSong={currentSong} />
 
       {view === 'create-song' && (
         <CreateSong

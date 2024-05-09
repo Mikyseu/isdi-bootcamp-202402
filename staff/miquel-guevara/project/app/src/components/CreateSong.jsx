@@ -3,10 +3,11 @@ import logic from '../logic';
 import { useContext } from '../context.js';
 
 function CreateSong({ onCancelClick }) {
+  const { showFeedback } = useContext();
+
   const handleCreateSongClick = event => {
     event.preventDefault();
 
-    // const { showFeedback } = useContext();
     const form = event.target;
     const title = form.title.value;
     const sunoId = form.sunoId.value;
@@ -21,7 +22,7 @@ function CreateSong({ onCancelClick }) {
   };
 
   return (
-    <main className="h-screen w-screen fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40">
+    <main className="h-screen w-screen z-10 fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40">
       <div className="bg-[#6E8BB3] p-4 rounded-lg">
         <form
           onSubmit={handleCreateSongClick}

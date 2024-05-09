@@ -5,11 +5,7 @@ import Footer from '../components/Footer';
 import Profile from '../components/Profile';
 import { Routes, Route } from 'react-router-dom';
 
-import { useContext } from '../context.js';
-
 function Home({ onUserLoggedOut }) {
-  const { showFeedback } = useContext();
-
   const [currentSong, setCurrentSong] = useState(null);
   const [playList, setPlayList] = useState(null);
   const changeCurrentSong = selectedSong => {
