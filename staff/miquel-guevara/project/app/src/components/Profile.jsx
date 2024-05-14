@@ -5,7 +5,7 @@ import logic from '../logic';
 import SongList from './SongList';
 import { useContext } from '../context.js';
 
-function Profile({ currentSong }) {
+function Profile({ currentSong, onSongSelected, stamp, setStamp }) {
   const { showFeedback } = useContext();
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
@@ -20,7 +20,7 @@ function Profile({ currentSong }) {
       .catch(error => {
         alert(error);
       });
-  });
+  }, []);
 
   const clearView = () => setView(null);
 
@@ -50,7 +50,7 @@ function Profile({ currentSong }) {
 
   return (
     <section className="h-full bg-[#6E8BB3] flex flex-col justify-start mt-4 mx-4">
-      <div className="sticky top-[80px] z-10 flex justify-between items-start p-4">
+      <div className="sticky top-[80px] z-30 w-full bg-[#6E8BB3] flex justify-between items-start p-4">
         <Link to="/">
           <img src="../../public/home.png" alt="home" className="w-8 h-8" />
         </Link>
@@ -93,7 +93,13 @@ function Profile({ currentSong }) {
         </button>
       </div>
 
-      <SongList userFavorites={true} currentSong={currentSong} />
+      <SongList
+        userFavorites={true}
+        currentSong={currentSong}
+        onSongSelected={onSongSelected}
+        stamp={stamp}
+        setStamp={setStamp}
+      />
 
       {view === 'create-song' && (
         <CreateSong

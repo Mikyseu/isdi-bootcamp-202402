@@ -1,21 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import SongList from '../components/SongList';
 import Footer from '../components/Footer';
 import Profile from '../components/Profile';
 import { Routes, Route } from 'react-router-dom';
+import { useContext } from '../context';
 
 function Home({ onUserLoggedOut }) {
   const [currentSong, setCurrentSong] = useState(null);
-  const [playList, setPlayList] = useState(null);
+  const [selectedSongIndex, setSelectedSongIndex] = useState(-1);
+  const [songsList, setSongsList] = useState(null);
   const changeCurrentSong = selectedSong => {
     setCurrentSong(selectedSong);
   };
-  const [stamp, setStamp] = useState(null);
+  const { stamp, setStamp } = useContext();
 
-  const handlePlayListChange = playList => {
-    setPlayList(playList);
+  const handleSongsListChange = songsList => {
+    setSongsList(songsList);
   };
+
+  const handleSongSelected = (selectedSongIndex, songsList) => {
+    setSelectedSongIndex(selectedSongIndex);
+    setSongsList(songsList);
+  };
+
+  // const getSongList = (userFavorites) => {
+  //   try {
+  //         logic
+  //           .retrieveSongs(userFavorites)
+  //           .then(songs => {
+  //             setSongs(songs);
+  //             setFilteredSongs(songs);
+  //           })
+  //           .catch(error => showFeedback(error));
+  //       } catch (error) {
+  //         showFeedback(error);
+  //       }
+  // }
+
+  // useEffect(() => {}, [stamp]);
+
+  // useEffect(() => {
+  //   try {
+  //     logic
+  //       .retrieveSongs(userFavorites)
+  //       .then(songs => {
+  //         setSongs(songs);
+  //         setFilteredSongs(songs);
+  //       })
+  //       .catch(error => showFeedback(error));
+  //   } catch (error) {
+  //     showFeedback(error);
+  //   }
+  // }, [userFavorites, favChanged]);
 
   return (
     <>
@@ -27,19 +64,32 @@ function Home({ onUserLoggedOut }) {
             element={
               <SongList
                 currentSong={changeCurrentSong}
-                playList={handlePlayListChange}
+                songsList={handleSongsListChange}
+                onSongSelected={handleSongSelected}
+                stamp={stamp}
+                setStamp={setStamp}
               />
             }
           />
           <Route
             path="/profile"
             element={
-              <Profile currentSong={changeCurrentSong} playList={playList} />
+              <Profile
+                currentSong={changeCurrentSong}
+                songsList={songsList}
+                onSongSelected={handleSongSelected}
+                stamp={stamp}
+                setStamp={setStamp}
+              />
             }
           />
         </Routes>
 
-        <Footer song={currentSong} playList={playList} />
+        <Footer
+          song={currentSong}
+          songsList={songsList}
+          songIndex={selectedSongIndex}
+        />
       </main>
     </>
   );

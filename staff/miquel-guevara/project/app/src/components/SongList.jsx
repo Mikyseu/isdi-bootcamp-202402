@@ -2,28 +2,23 @@ import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 import { useContext } from '../context.js';
 
-function SongList({ currentSong, userFavorites }) {
-  const { showFeedback } = useContext();
+function SongList({ currentSong, userFavorites, onSongSelected }) {
+  const { showFeedback, stamp, setStamp } = useContext();
 
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [favSongs, setFavSongs] = useState([]);
   const [songFavId, setSongFavId] = useState(null);
   const [favBoolean, setFavBoolean] = useState(false);
+  const [currentSongId, setCurrentSongId] = useState(null);
 
   useEffect(() => {
     try {
       logic
         .retrieveSongs(userFavorites)
-        .then(allSongs => {
-          const formattedSongs = allSongs.map(song => ({
-            ...song,
-            song: `https://cdn1.suno.ai/${song.sunoId}.mp3`,
-            image: `https://cdn1.suno.ai/image_${song.sunoId}.png`,
-          }));
-          setSongs(formattedSongs);
-          setFilteredSongs(formattedSongs);
+        .then(songs => {
+          setSongs(songs);
+          setFilteredSongs(songs);
         })
         .catch(error => showFeedback(error));
     } catch (error) {
@@ -33,6 +28,7 @@ function SongList({ currentSong, userFavorites }) {
 
   useEffect(() => {
     try {
+      // setStamp(Date.now);
       if (favBoolean) {
         logic.addFavorite(songFavId);
       } else {
@@ -45,6 +41,7 @@ function SongList({ currentSong, userFavorites }) {
 
   const handleSelectedSong = song => {
     currentSong(song);
+    setCurrentSongId(song.id);
   };
 
   const handleSearch = term => {
@@ -57,7 +54,7 @@ function SongList({ currentSong, userFavorites }) {
 
   const handlePlayFirstSong = () => {
     if (filteredSongs.length > 0) {
-      handleSelectedSong(filteredSongs[0]);
+      onSongSelected(0, songs);
     }
   };
 
@@ -73,7 +70,7 @@ function SongList({ currentSong, userFavorites }) {
       }
     });
     setSongs(updatedSongs);
-    setFavSongs(updatedSongs.filter(song => song.favorite));
+
     setFilteredSongs(
       updatedSongs.filter(song =>
         song.title.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -81,9 +78,13 @@ function SongList({ currentSong, userFavorites }) {
     );
   };
 
+  const handleSelectedSongIndex = selectedSongIndex => {
+    onSongSelected(selectedSongIndex, songs);
+  };
+
   return (
     <div className="pt-[80px] pb-[140px] max-w-screen-lg mx-auto px-4 md:px-0">
-      <div className="sticky top-[80px] z-10 flex items-center mb-4">
+      <div className="sticky pb-4 top-[80px] z-10 flex items-center mb-4 w-full  bg-[#6E8BB3]">
         <input
           type="text"
           placeholder="Search song..."
@@ -92,23 +93,27 @@ function SongList({ currentSong, userFavorites }) {
         />
         <button
           onClick={handlePlayFirstSong}
-          className="ml-2 px-2 py-2 mt-4 w-[120px] bg-[#1B1F47] text-white font-bold rounded-md"
+          className="ml-auto px-2 py-2 mt-4 w-[80px]"
         >
-          Play List
+          <img src="../../public/play List.png" alt="play list" />
         </button>
       </div>
 
-      <ul className="sticky top-[240px] mb-[140px] overflow-y-auto mt-4">
-        {filteredSongs.map(song => {
+      <ul className="sticky top-[200px] mb-[140px] overflow-y-auto">
+        {filteredSongs.map((song, index) => {
           return (
-            <li key={song.id} className="flex justify-between items-center">
+            <li
+              key={song.id}
+              className={`flex justify-between items-center py-1`}
+            >
               <a
                 href="#"
                 onClick={e => {
                   e.preventDefault();
                   handleSelectedSong(song);
+                  handleSelectedSongIndex(index);
                 }}
-                className="text-white font-semibold"
+                className="text-white font-semibold ml-2"
               >
                 {song.title}
               </a>
@@ -120,7 +125,7 @@ function SongList({ currentSong, userFavorites }) {
                       : '../public/heart-empty.png'
                   }
                   alt="fav"
-                  className="w-5 h-5"
+                  className="w-5 h-5 mr-2"
                 />
               </button>
             </li>

@@ -1,11 +1,23 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-function Footer({ song, onSongComplete, songsList }) {
+function Footer({ onSongComplete, songsList, songIndex }) {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [songToPlay, setSongToPlay] = useState(song);
+  const [songToPlay, setSongToPlay] = useState();
+  const [selectedSongIndex, setSelectedSongIndex] = useState(songIndex);
+
+  useEffect(() => {
+    setSelectedSongIndex(songIndex);
+
+    if (songIndex === -1) return;
+
+    const song = songsList[songIndex];
+
+    setSongToPlay(song);
+    setPlaying(true);
+  }, [songIndex]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -20,8 +32,7 @@ function Footer({ song, onSongComplete, songsList }) {
     };
 
     const handleEnded = () => {
-      onSongComplete();
-      setPlaying(false);
+      handleNextSong();
     };
 
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -33,18 +44,18 @@ function Footer({ song, onSongComplete, songsList }) {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [audioRef.current, onSongComplete]);
+  }, [audioRef.current, onSongComplete, selectedSongIndex]);
 
-  useEffect(() => {
-    if (song) {
-      setSongToPlay(song);
-    }
-    if (songToPlay) {
-      audioRef.current.load();
+  // useEffect(() => {
+  //   if (song) {
+  //     setSongToPlay(song);
+  //   }
+  //   if (songToPlay) {
+  //     audioRef.current.load();
 
-      setPlaying(true);
-    }
-  }, [song]);
+  //     setPlaying(true);
+  //   }
+  // }, [songToPlay]);
 
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
@@ -53,12 +64,17 @@ function Footer({ song, onSongComplete, songsList }) {
   const handlePlay = () => {
     const audio = audioRef.current;
 
-    if (audio.paused) {
-      audio.play();
-      setPlaying(true);
-    } else {
+    if (playing) {
       audio.pause();
       setPlaying(false);
+    } else {
+      if (selectedSongIndex === -1) return;
+
+      const song = songsList[selectedSongIndex];
+
+      setSongToPlay(song);
+      audio.play();
+      setPlaying(true);
     }
   };
 
@@ -67,34 +83,54 @@ function Footer({ song, onSongComplete, songsList }) {
   };
 
   const handleNextSong = () => {
-    const songIndex = songsList.indexOf(songToPlay);
+    let nextSongIndex = 0;
 
-    if (songIndex >= 0 && songIndex < songsList.length - 1) {
-      setSongToPlay(songsList[songIndex + 1]);
+    if (selectedSongIndex < songsList.length - 1) {
+      nextSongIndex = selectedSongIndex + 1;
     }
+
+    const nextSong = songsList[nextSongIndex];
+    setSongToPlay(nextSong);
+    setSelectedSongIndex(nextSongIndex);
   };
 
   const handlePreviousSong = () => {
-    const songIndex = songsList.indexOf(songToPlay);
-    if (songIndex > 0) {
-      setSongToPlay(songsList[songIndex - 1]);
+    let prevSongIndex = 0;
+
+    if (selectedSongIndex > 0) {
+      prevSongIndex = selectedSongIndex - 1;
     }
+
+    const prevSong = songsList[prevSongIndex];
+    setSongToPlay(prevSong);
+    setSelectedSongIndex(prevSongIndex);
   };
 
   return (
     <div className="fixed bottom-0 w-full h-[140px] flex justify-center items-center p-4 box-border bg-[#1B1F47] ">
-      {songToPlay && (
-        <div className="flex flex-col items-start">
-          <img src={songToPlay.image} className="w-20 h-20 " alt="Image song" />
-        </div>
-      )}
+      <div className="flex flex-col items-start">
+        <img
+          src={
+            songToPlay
+              ? `https://cdn1.suno.ai/image_${songToPlay?.sunoId}.png`
+              : `../../public/Vinyl.png`
+          }
+          className="w-16 h-16 rounded-full animate-spin animate-infinite animate-duration-[4000ms]"
+          alt="Image song"
+        />
+      </div>
+
       <div className="flex flex-col items-start ml-4 ">
-        {songToPlay && (
+        {
           <>
             <p className="font-bold text-white text-center">
-              {songToPlay.title}
+              {songToPlay?.title}
             </p>
-            <audio ref={audioRef} src={songToPlay.song} autoPlay={playing} />
+            <audio
+              ref={audioRef}
+              src={`https://cdn1.suno.ai/${songToPlay?.sunoId}.mp3`}
+              autoPlay={playing}
+            />
             <div className="relative w-[180px] h-2 bg-[#ffffff] rounded-full mt-4">
               <div
                 className="absolute h-full bg-[#6E8BB3] rounded-full"
@@ -108,7 +144,7 @@ function Footer({ song, onSongComplete, songsList }) {
               <p className="text-white font-semibold">{formatTime(duration)}</p>
             </div>
           </>
-        )}
+        }
         <div className="flex w-full justify-between mt-2">
           <button onClick={handlePreviousSong}>
             <img
@@ -124,7 +160,11 @@ function Footer({ song, onSongComplete, songsList }) {
               className="w-4 h-4"
             />
           </button>
-          <button onClick={handlePlay}>
+          <button
+            onClick={() => {
+              handlePlay();
+            }}
+          >
             {playing ? (
               <img src="../public/pause.png" alt="pause" className="w-5 h-5" />
             ) : (

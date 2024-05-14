@@ -1,9 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 import logic from '../logic';
 import { useContext } from '../context.js';
+import PopupInfo from './PopupInfo.jsx';
 
 function CreateSong({ onCancelClick }) {
   const { showFeedback } = useContext();
+  const [view, setView] = useState('');
 
   const handleCreateSongClick = event => {
     event.preventDefault();
@@ -21,13 +24,24 @@ function CreateSong({ onCancelClick }) {
     }
   };
 
+  const handleButtonClick = () => setView('PopupInfo');
+
   return (
-    <main className="h-screen w-screen z-10 fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40">
+    <main className="h-screen w-screen z-30 fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40">
       <div className="bg-[#6E8BB3] p-4 rounded-lg">
         <form
           onSubmit={handleCreateSongClick}
           className="flex flex-col items-center"
         >
+          {view === 'PopupInfo' && (
+            <PopupInfo
+              onCancelClick={() => setView('')}
+              onButtonClick={handleButtonClick}
+            />
+          )}
+          <button onClick={handleButtonClick} className="w-4 h-4 ml-auto">
+            <img src="../../public/information.png" alt="" />
+          </button>
           <div className="flex flex-col mb-4">
             <label htmlFor="title" className="text-white mb-1">
               Title

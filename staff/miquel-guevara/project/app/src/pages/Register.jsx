@@ -88,7 +88,7 @@ function Register({ onUserRegistered, onLoginClick }) {
           </button>
         </form>
       </div>
-      <div class="fixed bottom-8 items-center">
+      <div className="fixed bottom-8 items-center">
         <a
           href=""
           onClick={handleLoginClick}
