@@ -1,8 +1,9 @@
+// SongList component
 import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 import { useContext } from '../context.js';
 
-function SongList({ currentSong, userFavorites, onSongSelected }) {
+function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
   const { showFeedback, stamp, setStamp } = useContext();
 
   const [songs, setSongs] = useState([]);
@@ -11,6 +12,7 @@ function SongList({ currentSong, userFavorites, onSongSelected }) {
   const [songFavId, setSongFavId] = useState(null);
   const [favBoolean, setFavBoolean] = useState(false);
   const [currentSongId, setCurrentSongId] = useState(null);
+  const [selectedSongIndex, setSelectedSongIndex] = useState(null);
 
   useEffect(() => {
     try {
@@ -79,11 +81,12 @@ function SongList({ currentSong, userFavorites, onSongSelected }) {
   };
 
   const handleSelectedSongIndex = selectedSongIndex => {
+    setSelectedSongIndex(selectedSongIndex);
     onSongSelected(selectedSongIndex, songs);
   };
 
   return (
-    <div className="pt-[80px] pb-[140px] max-w-screen-lg mx-auto px-4 md:px-0">
+    <div className="pt-[80px] pb-[140px] max-w-screen-lg pl-4">
       <div className="sticky pb-4 top-[80px] z-10 flex items-center mb-4 w-full  bg-[#6E8BB3]">
         <input
           type="text"
@@ -93,7 +96,7 @@ function SongList({ currentSong, userFavorites, onSongSelected }) {
         />
         <button
           onClick={handlePlayFirstSong}
-          className="ml-auto px-2 py-2 mt-4 w-[80px]"
+          className="ml-auto px-2 py-2 mt-4 w-20"
         >
           <img src="../../public/play List.png" alt="play list" />
         </button>
@@ -104,19 +107,26 @@ function SongList({ currentSong, userFavorites, onSongSelected }) {
           return (
             <li
               key={song.id}
-              className={`flex justify-between items-center py-1`}
+              className={`flex justify-between items-center py-1 `}
             >
-              <a
-                href="#"
-                onClick={e => {
-                  e.preventDefault();
-                  handleSelectedSong(song);
-                  handleSelectedSongIndex(index);
-                }}
-                className="text-white font-semibold ml-2"
-              >
-                {song.title}
-              </a>
+              <div className="flex items-center">
+                <img
+                  src={`https://cdn1.suno.ai/image_${song.sunoId}.png`}
+                  alt="song cover"
+                  className="w-6 h-6 ml-2 mr-2"
+                />
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    handleSelectedSong(song);
+                    handleSelectedSongIndex(index);
+                  }}
+                  className="text-white font-semibold ml-2"
+                >
+                  {song.title}
+                </a>
+              </div>
               <button onClick={() => handleFav(song.id)}>
                 <img
                   src={
@@ -125,7 +135,7 @@ function SongList({ currentSong, userFavorites, onSongSelected }) {
                       : '../public/heart-empty.png'
                   }
                   alt="fav"
-                  className="w-5 h-5 mr-2"
+                  className="w-5 h-5 mr-4"
                 />
               </button>
             </li>

@@ -39,8 +39,13 @@ function CreateSong({ onCancelClick }) {
               onButtonClick={handleButtonClick}
             />
           )}
-          <button onClick={handleButtonClick} className="w-4 h-4 ml-auto">
-            <img src="../../public/information.png" alt="" />
+          <button
+            type="button"
+            onClick={handleButtonClick}
+            className="w-4 h-4 ml-auto"
+          >
+            {/* TODO posar text? */}
+            <img src="../../public/information.png" alt="information" />
           </button>
           <div className="flex flex-col mb-4">
             <label htmlFor="title" className="text-white mb-1">

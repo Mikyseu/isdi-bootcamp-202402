@@ -18,8 +18,8 @@ function PopupInfo({ onCancelClick, onButtonClick }) {
   };
 
   return (
-    <main className="h-screen w-screen z-30 fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40">
-      <div className="bg-[#6E8BB3] p-4 rounded-lg bg-opacity-80">
+    <main className="h-screen w-screen z-30 fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-40 ">
+      <div className="bg-[#6E8BB3] mx-4 p-4 rounded-md bg-opacity-80 animate-jump-in animate-once animate-duration-[1000ms]">
         <div>
           <button
             onClick={handlePopupClose}
