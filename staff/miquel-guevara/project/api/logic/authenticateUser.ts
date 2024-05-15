@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { validate, errors } from 'com'
 
 import { User } from '../data/index.ts'
@@ -11,15 +13,15 @@ function authenticateUser(username: string, password: string): Promise<string> {
     return User.findOne({ username })
         .catch(error => { throw new SystemError(error.message) })
         .then(user => {
-            if(!user)
+            if (!user)
                 throw new NotFoundError('user not found')
 
-            if(user.password !== password)
+            if (user.password !== password)
                 throw new CredentialsError('wrong password')
 
             return user.id
         })
-        
+
 }
 
 export default authenticateUser

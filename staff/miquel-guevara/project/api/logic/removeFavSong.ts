@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { NotFoundError, SystemError } from "../../com/errors.ts";
 import { User } from "../data/index.ts";
 

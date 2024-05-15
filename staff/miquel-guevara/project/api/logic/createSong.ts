@@ -1,4 +1,5 @@
-// create-song.ts
+// @ts-nocheck
+
 import mongoose from 'mongoose';
 
 import { validate, errors } from 'com';

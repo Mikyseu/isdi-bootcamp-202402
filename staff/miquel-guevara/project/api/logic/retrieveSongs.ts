@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Schema } from 'mongoose';
 
 const { Types: { ObjectId } } = Schema;

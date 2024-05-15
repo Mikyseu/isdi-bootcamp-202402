@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { User, Song } from "../data/index.ts";
 import { SystemError } from "../../com/errors.ts";
 

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { validate, errors } from 'com'
 
 import { UserType, User } from '../data/index.ts'

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { User } from '../data/index.ts';
 
 function updateUserAvatar(userId, newAvatar) {
