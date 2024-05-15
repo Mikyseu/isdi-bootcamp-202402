@@ -92,7 +92,7 @@ function Register({ onUserRegistered, onLoginClick }) {
         <a
           href=""
           onClick={handleLoginClick}
-          class="text-[#F7C815] mt-2 font-bold"
+          className="text-[#F7C815] mt-2 font-bold"
         >
           Login
         </a>

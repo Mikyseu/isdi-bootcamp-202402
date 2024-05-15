@@ -18,7 +18,8 @@ This application will gather the songs and their names from the website https://
 
 v0.1
 
-- edit profile(profile picture)
+- edit profile(profile avatar)
+- make the app adapted to people with disabilities
 
 ### UI Design
 

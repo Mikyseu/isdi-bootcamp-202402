@@ -106,6 +106,16 @@ function Footer({ onSongComplete, songsList, songIndex }) {
           className="w-16 h-16 rounded-full animate-spin animate-infinite animate-duration-[4000ms]"
           alt="Image song"
         />
+        <img
+          src="../../public/aguja-lp.png "
+          className="absolute top-8 left-6 w-16 h-16 "
+          alt="Imagen superior"
+        />
+        <img
+          src="../../public/vinilo-interior.png"
+          className="absolute top-[59px] left-[85px] w-6 h-6"
+          alt="Imagen superior"
+        />
       </div>
 
       <div className="flex flex-col items-start ml-4 ">
