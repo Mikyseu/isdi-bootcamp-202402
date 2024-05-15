@@ -44,7 +44,6 @@ function CreateSong({ onCancelClick }) {
             onClick={handleButtonClick}
             className="w-4 h-4 ml-auto"
           >
-            {/* TODO posar text? */}
             <img src="../../public/information.png" alt="information" />
           </button>
           <div className="flex flex-col mb-4">

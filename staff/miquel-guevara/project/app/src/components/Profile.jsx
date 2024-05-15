@@ -5,7 +5,7 @@ import logic from '../logic';
 import SongList from './SongList';
 import { useContext } from '../context.js';
 
-function Profile({ currentSong, onSongSelected, stamp, setStamp }) {
+function Profile({ currentSong, onSongSelected }) {
   const { showFeedback } = useContext();
   const [view, setView] = useState(null);
   const [user, setUser] = useState(null);
@@ -97,8 +97,6 @@ function Profile({ currentSong, onSongSelected, stamp, setStamp }) {
         userFavorites={true}
         currentSong={currentSong}
         onSongSelected={onSongSelected}
-        stamp={stamp}
-        setStamp={setStamp}
       />
 
       {view === 'create-song' && (

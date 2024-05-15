@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import logic from '../logic';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 import { useContext } from '../context.js';
 
-function Header({ onUserLoggedOut, stamp }) {
-  const params = useParams();
+function Header({ onUserLoggedOut }) {
   const [user, setUser] = useState(null);
   const { showFeedback } = useContext();
 
@@ -28,7 +26,7 @@ function Header({ onUserLoggedOut, stamp }) {
     } catch (error) {
       showFeedback(error);
     }
-  }, [stamp]);
+  }, []);
 
   return (
     <header className="fixed top-0 w-full h-[80px] z-10 flex items-center bg-[#1B1F47] p-2 ">

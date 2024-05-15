@@ -2,17 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 import { useContext } from '../context.js';
+import { logger } from '../utils';
 
-function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
-  const { showFeedback, stamp, setStamp } = useContext();
+function SongList({ currentSong, userFavorites, onSongSelected }) {
+  const { showFeedback } = useContext();
 
   const [songs, setSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [songFavId, setSongFavId] = useState(null);
   const [favBoolean, setFavBoolean] = useState(false);
-  const [currentSongId, setCurrentSongId] = useState(null);
-  const [selectedSongIndex, setSelectedSongIndex] = useState(null);
 
   useEffect(() => {
     try {
@@ -30,7 +29,6 @@ function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
 
   useEffect(() => {
     try {
-      // setStamp(Date.now);
       if (favBoolean) {
         logic.addFavorite(songFavId);
       } else {
@@ -43,7 +41,7 @@ function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
 
   const handleSelectedSong = song => {
     currentSong(song);
-    setCurrentSongId(song.id);
+    logger.debug('selectedSong -> handleSelectedSong');
   };
 
   const handleSearch = term => {
@@ -52,12 +50,15 @@ function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
       song.title.toLowerCase().includes(term.toLowerCase()),
     );
     setFilteredSongs(filtered);
+
+    logger.debug('search -> handleSearch');
   };
 
   const handlePlayFirstSong = () => {
     if (filteredSongs.length > 0) {
       onSongSelected(0, songs);
     }
+    logger.debug('firstSong -> handlePlayFirstSong');
   };
 
   const handleFav = id => {
@@ -78,10 +79,11 @@ function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
         song.title.toLowerCase().includes(searchTerm.toLowerCase()),
       ),
     );
+    logger.debug('favoriteSong -> handleFav');
   };
 
-  const handleSelectedSongIndex = selectedSongIndex => {
-    setSelectedSongIndex(selectedSongIndex);
+  const handleSelectedSongIndex = song => {
+    const selectedSongIndex = songs.indexOf(song);
     onSongSelected(selectedSongIndex, songs);
   };
 
@@ -120,7 +122,7 @@ function SongList({ currentSong, userFavorites, onSongSelected, songIndex }) {
                   onClick={e => {
                     e.preventDefault();
                     handleSelectedSong(song);
-                    handleSelectedSongIndex(index);
+                    handleSelectedSongIndex(song);
                   }}
                   className="text-white font-semibold ml-2"
                 >

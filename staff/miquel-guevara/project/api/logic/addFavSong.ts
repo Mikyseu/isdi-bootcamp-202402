@@ -1,7 +1,8 @@
 // @ts-nocheck
 
 import { User } from "../data/index.ts";
-import { SystemError } from "../../com/errors.ts";
+import { errors } from "com";
+const { SystemError } = errors
 
 function addFavSong(songId, userId) {
 

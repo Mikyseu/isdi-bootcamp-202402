@@ -45,18 +45,6 @@ function Footer({ onSongComplete, songsList, songIndex }) {
       audio.removeEventListener('ended', handleEnded);
     };
   }, [audioRef.current, onSongComplete, selectedSongIndex]);
-
-  // useEffect(() => {
-  //   if (song) {
-  //     setSongToPlay(song);
-  //   }
-  //   if (songToPlay) {
-  //     audioRef.current.load();
-
-  //     setPlaying(true);
-  //   }
-  // }, [songToPlay]);
-
   const skipBackward = () => {
     audioRef.current.currentTime -= 10;
   };

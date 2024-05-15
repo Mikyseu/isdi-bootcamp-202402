@@ -27,6 +27,7 @@ function PopupInfo({ onCancelClick, onButtonClick }) {
           >
             <img src="../../public/X.png" alt="close" />
           </button>
+          <p className="text-md font-bold text-white mb-1">Selected sunoId</p>
           <img src="../../public/sunoId info.png" alt="information" />{' '}
         </div>
       </div>

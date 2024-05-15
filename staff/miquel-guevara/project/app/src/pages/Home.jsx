@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
 import Header from '../components/Header';
 import SongList from '../components/SongList';
 import Footer from '../components/Footer';
 import Profile from '../components/Profile';
 import { Routes, Route } from 'react-router-dom';
-import { useContext } from '../context';
 
 function Home({ onUserLoggedOut }) {
   const [currentSong, setCurrentSong] = useState(null);
@@ -13,7 +13,6 @@ function Home({ onUserLoggedOut }) {
   const changeCurrentSong = selectedSong => {
     setCurrentSong(selectedSong);
   };
-  const { stamp, setStamp } = useContext();
 
   const handleSongsListChange = songsList => {
     setSongsList(songsList);
@@ -24,40 +23,10 @@ function Home({ onUserLoggedOut }) {
     setSongsList(songsList);
   };
 
-  // const getSongList = (userFavorites) => {
-  //   try {
-  //         logic
-  //           .retrieveSongs(userFavorites)
-  //           .then(songs => {
-  //             setSongs(songs);
-  //             setFilteredSongs(songs);
-  //           })
-  //           .catch(error => showFeedback(error));
-  //       } catch (error) {
-  //         showFeedback(error);
-  //       }
-  // }
-
-  // useEffect(() => {}, [stamp]);
-
-  // useEffect(() => {
-  //   try {
-  //     logic
-  //       .retrieveSongs(userFavorites)
-  //       .then(songs => {
-  //         setSongs(songs);
-  //         setFilteredSongs(songs);
-  //       })
-  //       .catch(error => showFeedback(error));
-  //   } catch (error) {
-  //     showFeedback(error);
-  //   }
-  // }, [userFavorites, favChanged]);
-
   return (
     <>
       <main className="min-h-screen bg-[#6E8BB3]">
-        <Header onUserLoggedOut={onUserLoggedOut} stamp={stamp} />
+        <Header onUserLoggedOut={onUserLoggedOut} />
         <Routes>
           <Route
             path="/"
@@ -66,8 +35,6 @@ function Home({ onUserLoggedOut }) {
                 currentSong={changeCurrentSong}
                 songsList={handleSongsListChange}
                 onSongSelected={handleSongSelected}
-                stamp={stamp}
-                setStamp={setStamp}
               />
             }
           />
@@ -78,8 +45,6 @@ function Home({ onUserLoggedOut }) {
                 currentSong={changeCurrentSong}
                 songsList={songsList}
                 onSongSelected={handleSongSelected}
-                stamp={stamp}
-                setStamp={setStamp}
               />
             }
           />
