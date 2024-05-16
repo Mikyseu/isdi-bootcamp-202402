@@ -108,7 +108,7 @@ function Footer({ onSongComplete, songsList, songIndex }) {
         />
         <img
           src="../../public/aguja-lp.png "
-          className="absolute top-8 left-6 w-16 h-16 "
+          className="absolute top-10 left-7 w-16 h-16 "
           alt="Imagen superior"
         />
         <img
