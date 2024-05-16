@@ -1,4 +1,3 @@
-// SongList component
 import React, { useState, useEffect } from 'react';
 import logic from '../logic';
 import { useContext } from '../context.js';

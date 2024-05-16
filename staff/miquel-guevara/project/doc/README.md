@@ -44,7 +44,6 @@ v0.1
 - Node
 - Tailwind
 - Mongo
-- Moongose
 
 ### Data Model
 
